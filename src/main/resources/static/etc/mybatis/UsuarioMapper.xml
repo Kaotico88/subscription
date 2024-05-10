@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!--
+ * @Autor
+ * Rene M. Gudmundsson P.
+ * Lizbeth Z. Montanio C. 
+ -->
+<mapper namespace="gudmundsson.com.invoice.dao.MQueryMapper">
+    <!-- Result Maps -->
+    <resultMap id="ClientResultMap" type="gudmundsson.com.invoice.core.Client">
+        <id     column="clie_client_id" 	  property="clientId" 	    javaType="string"/>
+        <result column="clie_customer_type"   property="customerType"   javaType="string"/>
+        <result column="clie_id_type"         property="idType"         javaType="string"/>
+        <result column="clie_msisdn"          property="msisdn"         javaType="string"/>
+        <result column="clie_activation_date" property="activationDate" javaType="java.sql.Date"/>
+        <result column="clie_total_discount"  property="totalDiscount"  javaType="double"/>
+    </resultMap>
+    
+    <!-- Queries -->
+    
+    <!-- *** Este query obtine un client a partir de su campo clientId -->
+    <select id="getClientById" resultMap="ClientResultMap">
+        <![CDATA[
+            SELECT *
+              FROM client
+        ]]>
+        <where>
+               AND clie_client_id = #{objectId}
+        </where>
+    </select>
+        
+    
+           
+</mapper> 
