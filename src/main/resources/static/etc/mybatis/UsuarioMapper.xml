@@ -5,9 +5,9 @@
  * Rene M. Gudmundsson P.
  * Lizbeth Z. Montanio C. 
  -->
-<mapper namespace="gudmundsson.com.invoice.dao.MQueryMapper">
+<mapper namespace="com.gudmundsson.subscription.dao.MUserMapper">
     <!-- Result Maps -->
-    <resultMap id="ClientResultMap" type="gudmundsson.com.invoice.core.Client">
+    <resultMap id="UserResultMap" type="gudmundsson.com.invoice.core.User">
         <id     column="clie_client_id" 	  property="clientId" 	    javaType="string"/>
         <result column="clie_customer_type"   property="customerType"   javaType="string"/>
         <result column="clie_id_type"         property="idType"         javaType="string"/>
