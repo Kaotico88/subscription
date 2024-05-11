@@ -1,5 +1,8 @@
 package com.gudmundsson.subscription.dto;
 
+import com.gudmundsson.subscription.core.Company;
+import com.gudmundsson.subscription.core.ItemService;
+
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
 
@@ -19,6 +22,46 @@ public class ItemServiceDto {
 	
 	@NotNull(message = "EL campo 'companyId' no es valido.")
 	private long companyId;
+	
+	public void copyTocore(ItemService object) {
+		object.setName(this.name);
+		object.setCostHour(this.costHour);
+		object.setDescription(this.description);
+		object.setCompany(new Company());
+		object.getCompany().setCompanyId(this.companyId);
+	}
+
+	public String getName() {
+		return name;
+	}
+
+	public void setName(String name) {
+		this.name = name;
+	}
+
+	public double getCostHour() {
+		return costHour;
+	}
+
+	public void setCostHour(double costHour) {
+		this.costHour = costHour;
+	}
+
+	public String getDescription() {
+		return description;
+	}
+
+	public void setDescription(String description) {
+		this.description = description;
+	}
+
+	public long getCompanyId() {
+		return companyId;
+	}
+
+	public void setCompanyId(long companyId) {
+		this.companyId = companyId;
+	}
 	
 	
 }
