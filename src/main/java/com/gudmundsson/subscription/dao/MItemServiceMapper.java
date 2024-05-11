@@ -9,7 +9,9 @@ import com.gudmundsson.subscription.util.exception.RepositoryException;
 @Mapper
 public interface MItemServiceMapper {
 
-public ItemService getCompanyById(@Param("recordId") String recordId) throws RepositoryException;
+	public ItemService getItemServiceById(@Param("recordId") String recordId) throws RepositoryException;
 	
 	public void saveRecord(@Param("item_service") ItemService itemService);
+	
+	public Long getNextVal();
 }

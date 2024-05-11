@@ -8,11 +8,11 @@
 <mapper namespace="com.gudmundsson.subscription.dao.MItemServiceMapper">
     <!-- Result Maps -->
     <resultMap id="ItemServiceResultMap" type="com.gudmundsson.subscription.core.ItemService">
-        <id     column="ite_item_service_id" property="itemServiceId" 	  javaType="string"/>
+        <id     column="ite_item_service_id" property="itemServiceId" 	  javaType="long"/>
         <result column="ite_name"   		 property="name"   			  javaType="string"/>
         <result column="ite_costxhour"       property="costHour"          javaType="double"/>
-        <result column="ite_description" 	 property="descripition" 	  javaType="string"/>
-        <result column="ite_com_company_id"  property="company.companyId" javaType="string"/>
+        <result column="ite_description" 	 property="description" 	  javaType="string"/>
+        <result column="ite_com_company_id"  property="company.companyId" javaType="long"/>
     </resultMap>
     
     <!-- Queries -->
@@ -43,5 +43,9 @@
                         #{item_service.description},
                         #{item_service.company.companyId})
         ]]>
-    </insert>  
+    </insert>
+    
+    <select id="getNextVal" resultType="java.lang.Long">
+        SELECT NEXTVAL('ite_seq')
+    </select>  
 </mapper> 

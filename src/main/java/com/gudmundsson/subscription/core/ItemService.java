@@ -2,7 +2,7 @@ package com.gudmundsson.subscription.core;
 
 public class ItemService {
 
-	private String itemServiceId;
+	private Long itemServiceId;
 	
 	private String name;
 	
@@ -12,11 +12,11 @@ public class ItemService {
 	
 	private Company company;
 
-	public String getItemServiceId() {
+	public Long getItemServiceId() {
 		return itemServiceId;
 	}
 
-	public void setItemServiceId(String itemServiceId) {
+	public void setItemServiceId(Long itemServiceId) {
 		this.itemServiceId = itemServiceId;
 	}
 

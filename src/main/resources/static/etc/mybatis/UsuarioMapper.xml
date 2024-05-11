@@ -8,7 +8,7 @@
 <mapper namespace="com.gudmundsson.subscription.dao.MUserMapper">
     <!-- Result Maps -->
     <resultMap id="UserResultMap" type="com.gudmundsson.subscription.core.User">
-        <id     column="use_user_id" 	      property="userId" 	    javaType="string"/>
+        <id     column="use_user_id" 	      property="userId" 	    javaType="long"/>
         <result column="use_name"   		  property="name"   		javaType="string"/>
         <result column="use_email"            property="email"         	javaType="string"/>
         <result column="use_total_cost_month" property="totalCostMonth" javaType="double"/>
@@ -40,5 +40,9 @@
                         #{user.email},
                         #{user.totalCostMonth})
         ]]>
-    </insert>  
+    </insert> 
+    
+    <select id="getNextVal" resultType="java.lang.Long">
+        SELECT NEXTVAL('use_seq')
+    </select> 
 </mapper> 

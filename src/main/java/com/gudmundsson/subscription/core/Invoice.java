@@ -4,21 +4,21 @@ import java.sql.Date;
 
 public class Invoice {
 
-	private String invoiceId;
+	private Long invoiceId;
 	
 	private String billingPeriod;
 	
-	private Double totalAmount;
-	
 	private Date issueDate;
+	
+	private Double totalAmount;
 	
 	private Subscription subscription;
 
-	public String getInvoiceId() {
+	public Long getInvoiceId() {
 		return invoiceId;
 	}
 
-	public void setInvoiceId(String invoiceId) {
+	public void setInvoiceId(Long invoiceId) {
 		this.invoiceId = invoiceId;
 	}
 
@@ -30,20 +30,20 @@ public class Invoice {
 		this.billingPeriod = billingPeriod;
 	}
 
-	public Double getTotalAmount() {
-		return totalAmount;
-	}
-
-	public void setTotalAmount(Double totalAmount) {
-		this.totalAmount = totalAmount;
-	}
-
 	public Date getIssueDate() {
 		return issueDate;
 	}
 
 	public void setIssueDate(Date issueDate) {
 		this.issueDate = issueDate;
+	}
+
+	public Double getTotalAmount() {
+		return totalAmount;
+	}
+
+	public void setTotalAmount(Double totalAmount) {
+		this.totalAmount = totalAmount;
 	}
 
 	public Subscription getSubscription() {
@@ -53,6 +53,6 @@ public class Invoice {
 	public void setSubscription(Subscription subscription) {
 		this.subscription = subscription;
 	}
-	
-	
+
+		
 }

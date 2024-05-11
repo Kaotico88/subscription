@@ -5,7 +5,6 @@ import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
-import com.gudmundsson.subscription.core.ItemService;
 import com.gudmundsson.subscription.core.Subscription;
 
 @Repository
@@ -20,8 +19,12 @@ public class RSubscriptionRepository {
 	
 	public Subscription save(Subscription object) {
 		long id = nextVal();
-		object.setUid(uid);
+		object.setSubscriptionId(id);
 		mapper.saveRecord(object);
 		return object;
+	}
+	
+	public Long nextVal() {
+		return mapper.getNextVal();
 	}
 }

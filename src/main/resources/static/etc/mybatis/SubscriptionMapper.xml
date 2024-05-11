@@ -8,12 +8,12 @@
 <mapper namespace="com.gudmundsson.subscription.dao.MSubscriptionMapper">
     <!-- Result Maps -->
     <resultMap id="SubscriptionResultMap" type="com.gudmundsson.subscription.core.Subscription">
-        <id     column="sub_subscription_id" 	 property="subscriptionId" 	    	  javaType="string"/>
-        <result column="sub_activation_date"   	 property="activationDate"   		  javaType="string"/>
+        <id     column="sub_subscription_id" 	 property="subscriptionId" 	    	  javaType="long"/>
         <result column="sub_state"       		 property="state"         			  javaType="boolean"/>
         <result column="sub_hours_used" 		 property="hoursUsed" 				  javaType="double"/>
-        <result column="sub_use_user_id"		 property="user.userId" 			  javaType="string"/>
-        <result column="sub_ite_item_service_id" property="itemService.itemServiceId" javaType="string"/>
+        <result column="sub_activation_date"   	 property="activationDate"   		  javaType="java.sql.Date"/>
+        <result column="sub_use_user_id"		 property="user.userId" 			  javaType="long"/>
+        <result column="sub_ite_item_service_id" property="itemService.itemServiceId" javaType="long"/>
     </resultMap>
     
     <!-- Queries -->
@@ -46,5 +46,9 @@
                         #{subscription.user.userId},
                         #{subscription.itemService.itemServiceId})
         ]]>
-    </insert>   
+    </insert>
+    
+    <select id="getNextVal" resultType="java.lang.Long">
+        SELECT NEXTVAL('sub_seq')
+    </select>   
 </mapper>

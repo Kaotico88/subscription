@@ -12,4 +12,6 @@ public interface MUserMapper {
 	public User getUserById(@Param("recordId") String recordId) throws RepositoryException;
 	
 	public void saveRecord(@Param("user") User user);
+	
+	public Long getNextVal();
 }

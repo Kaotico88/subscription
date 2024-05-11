@@ -16,4 +16,16 @@ public class RCompanyRepository {
 	public Company getById(Optional<String> id) {
 		return mapper.getCompanyById(id.orElse(null));
 	}
+	
+	public Company save(Company object) {
+		long id = nextVal();
+		object.setCompanyId(id);
+		mapper.saveRecord(object);
+		return object;
+	}
+	
+	public Long nextVal() {
+		return mapper.getNextVal();
+	}
+	
 }

@@ -4,32 +4,24 @@ import java.sql.Date;
 
 public class Subscription {
 
-	private String subscriptionId;
-	
-	private Date activationDate;
+	private Long subscriptionId;
 	
 	private Boolean state;
 	
 	private Double hoursUsed;
 	
+	private Date activationDate;
+	
 	private User user;
 	
 	private ItemService itemService;
 
-	public String getSubscriptionId() {
+	public Long getSubscriptionId() {
 		return subscriptionId;
 	}
 
-	public void setSubscriptionId(String subscriptionId) {
+	public void setSubscriptionId(Long subscriptionId) {
 		this.subscriptionId = subscriptionId;
-	}
-
-	public Date getActivationDate() {
-		return activationDate;
-	}
-
-	public void setActivationDate(Date activationDate) {
-		this.activationDate = activationDate;
 	}
 
 	public Boolean getState() {
@@ -48,6 +40,14 @@ public class Subscription {
 		this.hoursUsed = hoursUsed;
 	}
 
+	public Date getActivationDate() {
+		return activationDate;
+	}
+
+	public void setActivationDate(Date activationDate) {
+		this.activationDate = activationDate;
+	}
+
 	public User getUser() {
 		return user;
 	}
@@ -63,6 +63,6 @@ public class Subscription {
 	public void setItemService(ItemService itemService) {
 		this.itemService = itemService;
 	}
-	
+
 	
 }

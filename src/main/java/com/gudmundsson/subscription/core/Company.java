@@ -2,17 +2,17 @@ package com.gudmundsson.subscription.core;
 
 public class Company {
 
-	private String companyId;
+	private Long companyId;
 	
 	private String name;
 	
 	private String address;
 
-	public String getCompanyId() {
+	public Long getCompanyId() {
 		return companyId;
 	}
 
-	public void setCompanyId(String companyId) {
+	public void setCompanyId(Long companyId) {
 		this.companyId = companyId;
 	}
 

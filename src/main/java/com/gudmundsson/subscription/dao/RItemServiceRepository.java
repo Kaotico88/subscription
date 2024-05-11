@@ -19,8 +19,12 @@ public class RItemServiceRepository {
 	
 	public ItemService save(ItemService object) {
 		long id = nextVal();
-		object.setUid(uid);
+		object.setItemServiceId(id);
 		mapper.saveRecord(object);
 		return object;
+	}
+	
+	public Long nextVal() {
+		return mapper.getNextVal();
 	}
 }

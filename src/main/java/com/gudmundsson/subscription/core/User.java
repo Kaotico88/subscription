@@ -2,7 +2,7 @@ package com.gudmundsson.subscription.core;
 
 public class User {
 
-	private String userId;
+	private Long userId;
 	
 	private String name;
 	
@@ -10,11 +10,11 @@ public class User {
 	
 	private Double totalCostMonth;
 
-	public String getUserId() {
+	public Long getUserId() {
 		return userId;
 	}
 
-	public void setUserId(String userId) {
+	public void setUserId(Long userId) {
 		this.userId = userId;
 	}
 
