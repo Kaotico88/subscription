@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!--
+ * @Autor
+ * Rene M. Gudmundsson P.
+ * Lizbeth Z. Montanio C. 
+ -->
+<mapper namespace="com.gudmundsson.subscription.dao.MCompanyMapper">
+    <!-- Result Maps -->
+    <resultMap id="CompanyResultMap" type="com.gudmundsson.subscription.core.Company">
+        <id     column="com_company_id" property="companyId" javaType="string"/>
+        <result column="com_name"       property="name"      javaType="string"/>
+        <result column="com_address"    property="address"   javaType="string"/>
+    </resultMap>
+    
+    <!-- Queries -->
+    
+    <!-- *** Este query obtine un client a partir de su campo clientId -->
+    <select id="getClientById" resultMap="CompanyResultMap">
+        <![CDATA[
+            SELECT *
+              FROM client
+        ]]>
+        <where>
+               AND clie_client_id = #{objectId}
+        </where>
+    </select>    
+</mapper> 
