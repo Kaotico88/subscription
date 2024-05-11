@@ -15,14 +15,28 @@
     
     <!-- Queries -->
     
-    <!-- *** Este query obtine un client a partir de su campo clientId -->
-    <select id="getClientById" resultMap="CompanyResultMap">
+    <!-- *** Este query obtiene un company a partir de su campo companytId -->
+    <select id="getCompanyById" resultMap="CompanyResultMap">
         <![CDATA[
             SELECT *
-              FROM client
+              FROM company
         ]]>
         <where>
-               AND clie_client_id = #{objectId}
+               AND com_company_id = #{recordId}
         </where>
-    </select>    
+    </select>
+    
+    <!-- *** Este query guarda un registro company -->   
+    <insert id="saveRecord">
+        <![CDATA[
+            INSERT INTO company
+                       (com_company_id,
+                        com_name,
+                        com_address)
+                VALUES (#{company.companyId},
+                        #{company.name},
+                        #{company.address})
+        ]]>
+    </insert>
+    
 </mapper> 

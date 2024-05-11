@@ -17,13 +17,28 @@
     <!-- Queries -->
     
     <!-- *** Este query obtine un client a partir de su campo clientId -->
-    <select id="getClientById" resultMap="UserResultMap">
+    <select id="getUsertById" resultMap="UserResultMap">
         <![CDATA[
             SELECT *
-              FROM client
+              FROM user
         ]]>
         <where>
-               AND clie_client_id = #{objectId}
+               AND use_user_id = #{recordId}
         </where>
-    </select>    
+    </select>  
+    
+    <!-- *** Este query guarda un registro user -->   
+    <insert id="saveRecord">
+        <![CDATA[
+            INSERT INTO user
+                       (use_user_id,
+                        use_name,
+                        use_email,
+                        use_total_cost_month)
+                VALUES (#{user.userId},
+                        #{user.name},
+                        #{user.email},
+                        #{user.totalCostMonth})
+        ]]>
+    </insert>  
 </mapper> 

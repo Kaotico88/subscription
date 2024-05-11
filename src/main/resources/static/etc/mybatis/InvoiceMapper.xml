@@ -1,3 +1,4 @@
+<?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <!--
  * @Autor
@@ -7,23 +8,40 @@
 <mapper namespace="com.gudmundsson.subscription.dao.MInvoiceMapper">
     <!-- Result Maps -->
     <resultMap id="InvoiceResultMap" type="com.gudmundsson.subscription.core.Invoice">
-        <id     column="inv_invoice_id" 	    property="invoiceId" 	    		   javaType="string"/>
-        <result column="inv_billing_period"   	property="billingPeriod"   			   javaType="string"/>
-        <result column="inv_total_amount"       property="TotalAmount"         		   javaType="double"/>
-        <result column="inv_issue_date" 		property="issueDate" 				   javaType="java.sql.date"/>
-        <result column="inv_sub_subscriptio_id" property="subscription.subscriptionId" javaType="string"/>
+        <id     column="inv_invoice_id" 	     property="invoiceId" 	    		    javaType="string"/>
+        <result column="inv_billing_period"   	 property="billingPeriod"   			javaType="string"/>
+        <result column="inv_total_amount"        property="totalAmount"         		javaType="double"/>
+        <result column="inv_issue_date" 		 property="issueDate" 				    javaType="java.sql.date"/>
+        <result column="inv_sub_subscription_id" property="subscription.subscriptionId" javaType="string"/>
     </resultMap>
     
     <!-- Queries -->
     
-    <!-- *** Este query obtine un client a partir de su campo clientId -->
-    <select id="getClientById" resultMap="InvoiceResultMap">
+    <!-- *** Este query obtine un client a partir de su campo invoiceId -->
+    <select id="getInvoicetById" resultMap="InvoiceResultMap">
         <![CDATA[
             SELECT *
-              FROM client
+              FROM invoice
         ]]>
         <where>
-               AND clie_client_id = #{objectId}
+               AND inv_invoice_id = #{recordId}
         </where>
-    </select>    
+    </select>
+    
+    <!-- *** Este query guarda un registro invoice -->   
+    <insert id="saveRecord">
+        <![CDATA[
+            INSERT INTO invoice
+                       (inv_invoice_id,
+                        inv_billing_period,
+                        inv_total_amount,
+                        inv_issue_date,
+                        inv_sub_subscription_id)
+                VALUES (#{invoice.invoiceId},
+                        #{invoice.billingPeriod},
+                        #{invoice.totalAmount},
+                        #{invoice.issueDate},
+                        #{invoice.subscription.subscriptionId})
+        ]]>
+    </insert>    
 </mapper>

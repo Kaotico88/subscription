@@ -1,10 +1,12 @@
 package com.gudmundsson.subscription.core;
 
+import java.sql.Date;
+
 public class Subscription {
 
-	private String subscriptioId;
+	private String subscriptionId;
 	
-	private String activationDate;
+	private Date activationDate;
 	
 	private Boolean state;
 	
@@ -12,21 +14,21 @@ public class Subscription {
 	
 	private User user;
 	
-	private ItemService itemservice;
+	private ItemService itemService;
 
-	public String getSubscriptioId() {
-		return subscriptioId;
+	public String getSubscriptionId() {
+		return subscriptionId;
 	}
 
-	public void setSubscriptioId(String subscriptioId) {
-		this.subscriptioId = subscriptioId;
+	public void setSubscriptionId(String subscriptionId) {
+		this.subscriptionId = subscriptionId;
 	}
 
-	public String getActivationDate() {
+	public Date getActivationDate() {
 		return activationDate;
 	}
 
-	public void setActivationDate(String activationDate) {
+	public void setActivationDate(Date activationDate) {
 		this.activationDate = activationDate;
 	}
 
@@ -54,12 +56,12 @@ public class Subscription {
 		this.user = user;
 	}
 
-	public ItemService getItemservice() {
-		return itemservice;
+	public ItemService getItemService() {
+		return itemService;
 	}
 
-	public void setItemservice(ItemService itemservice) {
-		this.itemservice = itemservice;
+	public void setItemService(ItemService itemService) {
+		this.itemService = itemService;
 	}
 	
 	
