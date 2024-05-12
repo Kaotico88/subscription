@@ -13,7 +13,7 @@ public class RCompanyRepository {
 	@Autowired
 	private MCompanyMapper mapper;
 	
-	public Company getById(Optional<String> id) {
+	public Company getCompanyById(Optional<Long> id) {
 		return mapper.getCompanyById(id.orElse(null));
 	}
 	

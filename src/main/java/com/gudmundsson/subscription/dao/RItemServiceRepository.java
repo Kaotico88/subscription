@@ -13,7 +13,7 @@ public class RItemServiceRepository {
 	@Autowired
 	private MItemServiceMapper mapper;
 
-	public ItemService getById(Optional<String> id) {
+	public ItemService getItemServiceById(Optional<Long> id) {
 		return mapper.getItemServiceById(id.orElse(null));
 	}
 	

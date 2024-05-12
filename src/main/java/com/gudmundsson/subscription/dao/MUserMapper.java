@@ -9,7 +9,7 @@ import com.gudmundsson.subscription.util.exception.RepositoryException;
 @Mapper
 public interface MUserMapper {
 
-	public User getUserById(@Param("recordId") String recordId) throws RepositoryException;
+	public User getUserById(@Param("recordId") Long recordId) throws RepositoryException;
 	
 	public void saveRecord(@Param("user") User user);
 	

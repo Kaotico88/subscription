@@ -13,7 +13,7 @@ public class RUserRepository {
 	@Autowired
 	private MUserMapper mapper;
 
-	public User getById(Optional<String> id) {
+	public User getUserById(Optional<Long> id) {
 		return mapper.getUserById(id.orElse(null));
 	}
 	
