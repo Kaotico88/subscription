@@ -20,6 +20,7 @@ public class UserService {
 	}
 	
 	public User save(User object) throws RepositoryException{
+		System.out.println("Estoy en el metodo save de user!!");
 		return repository.save(object);
 	}
 }
