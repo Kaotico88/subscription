@@ -3,15 +3,15 @@ package com.gudmundsson.subscription.dao;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 
-import com.gudmundsson.subscription.core.User;
+import com.gudmundsson.subscription.core.Customer;
 import com.gudmundsson.subscription.util.exception.RepositoryException;
 
 @Mapper
-public interface MUserMapper {
+public interface MCustomerMapper {
 
-	public User getUserById(@Param("recordId") Long recordId) throws RepositoryException;
+	public Customer getCustomerById(@Param("recordId") Long recordId) throws RepositoryException;
 	
-	public void saveRecord(@Param("user") User user);
+	public void saveRecord(@Param("customer") Customer customer);
 	
 	public Long getNextVal();
 }

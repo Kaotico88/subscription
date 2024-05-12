@@ -5,21 +5,21 @@ import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
-import com.gudmundsson.subscription.core.User;
+import com.gudmundsson.subscription.core.Customer;
 
 @Repository
-public class RUserRepository {
+public class RCustomerRepository {
 
 	@Autowired
-	private MUserMapper mapper;
+	private MCustomerMapper mapper;
 
-	public User getUserById(Optional<Long> id) {
-		return mapper.getUserById(id.orElse(null));
+	public Customer getCustomerById(Optional<Long> id) {
+		return mapper.getCustomerById(id.orElse(null));
 	}
 	
-	public User save(User object) {
+	public Customer save(Customer object) {
 		long id = nextVal();
-		object.setUserId(id);
+		object.setCustomerId(id);
 		mapper.saveRecord(object);
 		return object;
 	}

@@ -12,7 +12,7 @@
         <result column="sub_state"       		 property="state"         			  javaType="boolean"/>
         <result column="sub_hours_used" 		 property="hoursUsed" 				  javaType="double"/>
         <result column="sub_activation_date"   	 property="activationDate"   		  javaType="java.sql.Date"/>
-        <result column="sub_use_user_id"		 property="user.userId" 			  javaType="long"/>
+        <result column="sub_cus_customer_id"     property="customer.customerId" 	  javaType="long"/>
         <result column="sub_ite_item_service_id" property="itemService.itemServiceId" javaType="long"/>
     </resultMap>
     
@@ -37,13 +37,13 @@
                         sub_activation_date,
                         sub_state,
                         sub_hours_used,
-                        sub_use_user_id,
+                        ssub_ite_item_service_id,
                         sub_ite_item_service_id)
                 VALUES (#{subscription.subscriptionId},
                         #{subscription.activationDate},
                         #{subscription.state},
                         #{subscription.hoursUsed},
-                        #{subscription.user.userId},
+                        #{subscription.customer.customerId},
                         #{subscription.itemService.itemServiceId})
         ]]>
     </insert>

@@ -2,12 +2,12 @@ package com.gudmundsson.subscription.dto;
 
 
 
-import com.gudmundsson.subscription.core.User;
+import com.gudmundsson.subscription.core.Customer;
 
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
 
-public class UserDto {
+public class CustomerDto {
 
 	@NotNull(message = "El campo 'name' no es válido.")
     @Size(max = 3, message = "El campo 'name' no debe ser mayor que 40 caracteres.")
@@ -17,7 +17,7 @@ public class UserDto {
     @Size(max = 3, message = "El campo 'email' no debe ser mayor que 40 caracteres.")
 	private String email;
 	
-	public void copyToCore(User object) {
+	public void copyToCore(Customer object) {
 		object.setName(this.name);
 		object.setEmail(this.email);
 	}
@@ -37,6 +37,5 @@ public class UserDto {
 	public void setEmail(String email) {
 		this.email = email;
 	}
-	
 	
 }

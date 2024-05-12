@@ -12,7 +12,7 @@ public class Subscription {
 	
 	private Date activationDate;
 	
-	private User user;
+	private Customer customer;
 	
 	private ItemService itemService;
 
@@ -48,12 +48,12 @@ public class Subscription {
 		this.activationDate = activationDate;
 	}
 
-	public User getUser() {
-		return user;
+	public Customer getCustomer() {
+		return customer;
 	}
 
-	public void setUser(User user) {
-		this.user = user;
+	public void setCustomer(Customer customer) {
+		this.customer = customer;
 	}
 
 	public ItemService getItemService() {

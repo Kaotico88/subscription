@@ -1,8 +1,8 @@
 package com.gudmundsson.subscription.core;
 
-public class User {
+public class Customer {
 
-	private Long userId;
+	private Long customerId;
 	
 	private String name;
 	
@@ -10,12 +10,12 @@ public class User {
 	
 	private Double totalCostMonth;
 
-	public Long getUserId() {
-		return userId;
+	public Long getCustomerId() {
+		return customerId;
 	}
 
-	public void setUserId(Long userId) {
-		this.userId = userId;
+	public void setCustomerId(Long customerId) {
+		this.customerId = customerId;
 	}
 
 	public String getName() {
@@ -41,6 +41,7 @@ public class User {
 	public void setTotalCostMonth(Double totalCostMonth) {
 		this.totalCostMonth = totalCostMonth;
 	}
+
 	
 	
 }

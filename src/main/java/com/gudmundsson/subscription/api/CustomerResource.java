@@ -12,11 +12,10 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.gudmundsson.subscription.core.User;
+import com.gudmundsson.subscription.core.Customer;
 import com.gudmundsson.subscription.dto.HealthMessage;
-import com.gudmundsson.subscription.dto.UserDto;
-import com.gudmundsson.subscription.service.UserService;
-//import com.gudmundsson.subscription.service.UserService;
+import com.gudmundsson.subscription.dto.CustomerDto;
+import com.gudmundsson.subscription.service.CustomerService;
 import com.gudmundsson.subscription.util.AElog;
 import com.gudmundsson.subscription.util.AEutil;
 import com.gudmundsson.subscription.util.exception.response.custom.CustomRuntimeException;
@@ -24,16 +23,16 @@ import com.gudmundsson.subscription.util.exception.response.custom.CustomRuntime
 import jakarta.servlet.http.HttpServletRequest;
 
 @RestController
-@RequestMapping("/api/v1/users")
-public class UserResource {
+@RequestMapping("/api/v1/customers")
+public class CustomerResource {
 
-	private static final Logger logger = LoggerFactory.getLogger(UserResource.class);
+	private static final Logger logger = LoggerFactory.getLogger(CustomerResource.class);
 	
 	@Autowired
 	private AEutil util;
 	
 	@Autowired
-	private UserService userService;
+	private CustomerService customerService;
 	
 	@GetMapping("/status")
 	public ResponseEntity<HealthMessage> healthRequest(HttpServletRequest request) throws Exception {
@@ -49,25 +48,25 @@ public class UserResource {
 	}
 	
 	@PostMapping
-	public ResponseEntity<User> save(@RequestBody UserDto userDto, HttpServletRequest request){
+	public ResponseEntity<Customer> save(@RequestBody CustomerDto customerDto, HttpServletRequest request){
 		String sessionLogId = System.currentTimeMillis() + ": ";
-		User responseObj = new User();// este es el objetito
+		Customer responseObj = new Customer();// este es el objetito
 		HttpHeaders responseHeaders = new HttpHeaders();
 		requestLog(request, sessionLogId);
 		
-		if(userDto == null) {
+		if(customerDto == null) {
 			throw new CustomRuntimeException(HttpStatus.BAD_REQUEST, 400, "El objeto que se desea registrar es nulo.");
 		}
 		
-		userDto.copyToCore(responseObj);
-		responseObj = userService.save(responseObj);
+		customerDto.copyToCore(responseObj);
+		responseObj = customerService.save(responseObj);
 		
-		if(responseObj == null || responseObj.getUserId() == null) {
-			throw new CustomRuntimeException(HttpStatus.CONFLICT, "El usuario no se pudo registrar.");
+		if(responseObj == null || responseObj.getCustomerId() == null) {
+			throw new CustomRuntimeException(HttpStatus.CONFLICT, "El cliente no se pudo registrar.");
 		}
 		
 		responseHeaders.set("Custom-Message", "HTTP/1.1 201 CREATED");
-        return new ResponseEntity<User>(responseObj, responseHeaders, HttpStatus.CREATED);
+        return new ResponseEntity<Customer>(responseObj, responseHeaders, HttpStatus.CREATED);
 	}
 	
 	

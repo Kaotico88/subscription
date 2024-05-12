@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!--
+ * @Autor
+ * Rene M. Gudmundsson P.
+ * Lizbeth Z. Montanio C. 
+ -->
+<mapper namespace="com.gudmundsson.subscription.dao.MCustomerMapper">
+    <!-- Result Maps -->
+    <resultMap id="CustomerResultMap" type="com.gudmundsson.subscription.core.Customer">
+        <id     column="cus_customer_id" 	  property="customerId" 	javaType="long"/>
+        <result column="cus_name"   		  property="name"   		javaType="string"/>
+        <result column="cus_email"            property="email"         	javaType="string"/>
+        <result column="cus_total_cost_month" property="totalCostMonth" javaType="double"/>
+    </resultMap>
+    
+    <!-- Queries -->
+    
+    <!-- *** Este query obtine un client a partir de su campo clientId -->
+    <select id="getCustomertById" resultMap="CustomerResultMap">
+        <![CDATA[
+            SELECT *
+              FROM customer
+        ]]>
+        <where>
+               AND cus_customer_id = #{recordId}
+        </where>
+    </select>  
+    
+    <!-- *** Este query guarda un registro user -->   
+    <insert id="saveRecord">
+        <![CDATA[
+            INSERT INTO customer
+                       (cus_customer_id,
+                        cus_name,
+                        cus_email,
+                        cus_total_cost_month)
+                VALUES (#{customer.customerId},
+                        #{customer.name},
+                        #{customer.email},
+                        #{customer.totalCostMonth})
+        ]]>
+    </insert> 
+    
+    <select id="getNextVal" resultType="java.lang.Long">
+        SELECT NEXTVAL('cus_seq')
+    </select> 
+</mapper> 
