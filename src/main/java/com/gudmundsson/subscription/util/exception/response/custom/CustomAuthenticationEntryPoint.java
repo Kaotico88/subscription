@@ -22,6 +22,7 @@ public class CustomAuthenticationEntryPoint implements AuthenticationEntryPoint{
 
     private ObjectMapper objectMapper = new ObjectMapper();
 
+    @Override
     public void commence(HttpServletRequest request, HttpServletResponse response,
             AuthenticationException authException) throws IOException, ServletException {
         logger.warn("CustomAuthenticationEntryPoint.class -> ({}): {}.", request.getRequestURI(),

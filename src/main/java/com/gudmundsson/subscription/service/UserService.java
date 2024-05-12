@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 
 import com.gudmundsson.subscription.core.User;
 import com.gudmundsson.subscription.dao.RUserRepository;
+import com.gudmundsson.subscription.util.exception.RepositoryException;
 
 @Service
 public class UserService {
@@ -14,11 +15,11 @@ public class UserService {
 	@Autowired
 	private RUserRepository repository;
 	
-	public User getUserById(Optional<Long> id) {
+	public User getUserById(Optional<Long> id) throws RepositoryException{
 		return repository.getUserById(id);
 	}
 	
-	public User save(User object) {
+	public User save(User object) throws RepositoryException{
 		return repository.save(object);
 	}
 }

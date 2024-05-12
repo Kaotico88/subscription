@@ -10,7 +10,7 @@
     <resultMap id="InvoiceResultMap" type="com.gudmundsson.subscription.core.Invoice">
         <id     column="inv_invoice_id" 	     property="invoiceId" 	    		    javaType="long"/>
         <result column="inv_billing_period"   	 property="billingPeriod"   			javaType="string"/>
-        <result column="inv_issue_date" 		 property="issueDate" 				    javaType="java.sql.date"/>
+        <result column="inv_issue_date" 		 property="issueDate" 				    javaType="java.sql.Date"/>
         <result column="inv_total_amount"        property="totalAmount"         		javaType="double"/>
         <result column="inv_sub_subscription_id" property="subscription.subscriptionId" javaType="long"/>
     </resultMap>
