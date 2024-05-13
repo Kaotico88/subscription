@@ -37,7 +37,7 @@
                         sub_activation_date,
                         sub_state,
                         sub_hours_used,
-                        ssub_ite_item_service_id,
+                        sub_cus_customer_id,
                         sub_ite_item_service_id)
                 VALUES (#{subscription.subscriptionId},
                         #{subscription.activationDate},

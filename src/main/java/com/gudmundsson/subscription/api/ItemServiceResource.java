@@ -12,9 +12,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.gudmundsson.subscription.core.Customer;
 import com.gudmundsson.subscription.core.ItemService;
-import com.gudmundsson.subscription.dto.CustomerDto;
 import com.gudmundsson.subscription.dto.HealthMessage;
 import com.gudmundsson.subscription.dto.ItemServiceDto;
 import com.gudmundsson.subscription.service.ItemServiceService;
@@ -25,7 +23,7 @@ import com.gudmundsson.subscription.util.exception.response.custom.CustomRuntime
 import jakarta.servlet.http.HttpServletRequest;
 
 @RestController
-@RequestMapping("/api/v1/itemServices")
+@RequestMapping("/api/v1/itemServices/register")
 public class ItemServiceResource {
 
 	private static final Logger logger = LoggerFactory.getLogger(CustomerResource.class);

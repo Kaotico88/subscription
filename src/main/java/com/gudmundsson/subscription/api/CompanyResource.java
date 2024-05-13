@@ -23,7 +23,7 @@ import com.gudmundsson.subscription.util.exception.response.custom.CustomRuntime
 import jakarta.servlet.http.HttpServletRequest;
 
 @RestController
-@RequestMapping("/api/v1/companies")
+@RequestMapping("/api/v1/companies/register")
 public class CompanyResource {
 
 	private static final Logger logger = LoggerFactory.getLogger(CompanyResource.class);
