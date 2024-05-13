@@ -12,10 +12,12 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.gudmundsson.subscription.core.Company;
-import com.gudmundsson.subscription.dto.CompanyDto;
+import com.gudmundsson.subscription.core.Customer;
+import com.gudmundsson.subscription.core.ItemService;
+import com.gudmundsson.subscription.dto.CustomerDto;
 import com.gudmundsson.subscription.dto.HealthMessage;
-import com.gudmundsson.subscription.service.CompanyService;
+import com.gudmundsson.subscription.dto.ItemServiceDto;
+import com.gudmundsson.subscription.service.ItemServiceService;
 import com.gudmundsson.subscription.util.AElog;
 import com.gudmundsson.subscription.util.AEutil;
 import com.gudmundsson.subscription.util.exception.response.custom.CustomRuntimeException;
@@ -23,16 +25,16 @@ import com.gudmundsson.subscription.util.exception.response.custom.CustomRuntime
 import jakarta.servlet.http.HttpServletRequest;
 
 @RestController
-@RequestMapping("/api/v1/companies")
-public class CompanyResource {
+@RequestMapping("/api/v1/itemServices")
+public class ItemServiceResource {
 
-	private static final Logger logger = LoggerFactory.getLogger(CompanyResource.class);
+	private static final Logger logger = LoggerFactory.getLogger(CustomerResource.class);
 	
 	@Autowired
 	private AEutil util;
 	
 	@Autowired
-	private CompanyService companyService;
+	private ItemServiceService itemServiceService;
 	
 	@GetMapping("/status")
 	public ResponseEntity<HealthMessage> healthRequest(HttpServletRequest request) throws Exception {
@@ -48,27 +50,26 @@ public class CompanyResource {
 	}
 	
 	@PostMapping
-	public ResponseEntity<Company> save(@RequestBody CompanyDto companyDto, HttpServletRequest request){
+	public ResponseEntity<ItemService> save(@RequestBody ItemServiceDto itemServiceDto, HttpServletRequest request){
 		String sessionLogId = System.currentTimeMillis() + ": ";
-		Company responseObj = new Company();// este es el objetito
+		ItemService responseObj = new ItemService();// este es el objetito
 		HttpHeaders responseHeaders = new HttpHeaders();
 		requestLog(request, sessionLogId);
 		
-		if(companyDto == null) {
+		if(itemServiceDto == null) {
 			throw new CustomRuntimeException(HttpStatus.BAD_REQUEST, 400, "El objeto que se desea registrar es nulo.");
 		}
 		
-		companyDto.copyToCore(responseObj);
-		responseObj = companyService.save(responseObj);
+		itemServiceDto.copyToCore(responseObj);
+		responseObj = itemServiceService.save(responseObj);
 		
-		if(responseObj == null || responseObj.getCompanyId() == null) {
-			throw new CustomRuntimeException(HttpStatus.CONFLICT, "La compania no se pudo registrar.");
+		if(responseObj == null || responseObj.getItemServiceId() == null) {
+			throw new CustomRuntimeException(HttpStatus.CONFLICT, "El servicio no se pudo registrar.");
 		}
 		
 		responseHeaders.set("Custom-Message", "HTTP/1.1 201 CREATED");
-        return new ResponseEntity<Company>(responseObj, responseHeaders, HttpStatus.CREATED);
+        return new ResponseEntity<ItemService>(responseObj, responseHeaders, HttpStatus.CREATED);
 	}
-	
 	
 	private synchronized void requestLog(HttpServletRequest request, String sessionLogId) {
 		AElog.infoX(logger,

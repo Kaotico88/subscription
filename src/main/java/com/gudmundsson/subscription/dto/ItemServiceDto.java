@@ -3,6 +3,7 @@ package com.gudmundsson.subscription.dto;
 import com.gudmundsson.subscription.core.Company;
 import com.gudmundsson.subscription.core.ItemService;
 
+import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
 
@@ -21,9 +22,10 @@ public class ItemServiceDto {
 	private String description;
 	
 	@NotNull(message = "EL campo 'companyId' no es valido.")
+	@Min(value = 1, message = "El id no puede ser menor que 1.")
 	private long companyId;
 	
-	public void copyTocore(ItemService object) {
+	public void copyToCore(ItemService object) {
 		object.setName(this.name);
 		object.setCostHour(this.costHour);
 		object.setDescription(this.description);
