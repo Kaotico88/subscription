@@ -13,7 +13,7 @@ public class RSubscriptionRepository {
 	@Autowired
 	private MSubscriptionMapper mapper;
 
-	public Subscription getSubscriptionById(Optional<String> id) {
+	public Subscription getSubscriptionById(Optional<Long> id) {
 		return mapper.getSubscriptionById(id.orElse(null));
 	}
 	
