@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import com.gudmundsson.subscription.core.Subscription;
+import com.gudmundsson.subscription.util.exception.RepositoryException;
 
 @Repository
 public class RSubscriptionRepository {
@@ -13,11 +14,11 @@ public class RSubscriptionRepository {
 	@Autowired
 	private MSubscriptionMapper mapper;
 
-	public Subscription getSubscriptionById(Optional<Long> id) {
+	public Subscription getSubscriptionById(Optional<Long> id) throws RepositoryException {
 		return mapper.getSubscriptionById(id.orElse(null));
 	}
 	
-	public Subscription save(Subscription object) {
+	public Subscription save(Subscription object) throws RepositoryException {
 		long id = nextVal();
 		object.setSubscriptionId(id);
 		mapper.saveRecord(object);

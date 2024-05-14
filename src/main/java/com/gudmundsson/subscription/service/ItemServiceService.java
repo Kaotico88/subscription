@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 
 import com.gudmundsson.subscription.core.ItemService;
 import com.gudmundsson.subscription.dao.RItemServiceRepository;
+import com.gudmundsson.subscription.util.exception.RepositoryException;
 
 @Service
 public class ItemServiceService {
@@ -14,11 +15,11 @@ public class ItemServiceService {
 	@Autowired
 	private RItemServiceRepository repository;
 	
-	public ItemService getItemServiceById(Optional<Long> id) {
+	public ItemService getItemServiceById(Optional<Long> id)throws RepositoryException{
 		return repository.getItemServiceById(id);
 	}
 	
-	public ItemService save(ItemService object) {
+	public ItemService save(ItemService object) throws RepositoryException{
 		return repository.save(object);
 	}
 	

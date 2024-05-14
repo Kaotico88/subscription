@@ -9,9 +9,9 @@ import com.gudmundsson.subscription.util.exception.RepositoryException;
 @Mapper
 public interface MInvoiceMapper {
 
-	public Invoice getInvoiceById(@Param("recordId") String recordId) throws RepositoryException;
+	public Invoice getInvoiceById(@Param("recordId") Long recordId) throws RepositoryException;
 	
-	public void saveRecord(@Param("invoice")Invoice invoice);
+	public void saveRecord(@Param("invoice")Invoice invoice) throws RepositoryException;
 	
 	public Long getNextVal();
 }

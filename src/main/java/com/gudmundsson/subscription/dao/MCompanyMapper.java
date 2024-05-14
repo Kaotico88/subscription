@@ -11,7 +11,7 @@ public interface MCompanyMapper {
 
 	public Company getCompanyById(@Param("recordId") Long recordId) throws RepositoryException;
 	
-	public void saveRecord(@Param("company") Company company);
+	public void saveRecord(@Param("company") Company company) throws RepositoryException;
 	
 	public Long getNextVal();
 }

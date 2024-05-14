@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import com.gudmundsson.subscription.core.ItemService;
+import com.gudmundsson.subscription.util.exception.RepositoryException;
 
 @Repository
 public class RItemServiceRepository {
@@ -13,11 +14,11 @@ public class RItemServiceRepository {
 	@Autowired
 	private MItemServiceMapper mapper;
 
-	public ItemService getItemServiceById(Optional<Long> id) {
+	public ItemService getItemServiceById(Optional<Long> id) throws RepositoryException {
 		return mapper.getItemServiceById(id.orElse(null));
 	}
 	
-	public ItemService save(ItemService object) {
+	public ItemService save(ItemService object) throws RepositoryException {
 		long id = nextVal();
 		object.setItemServiceId(id);
 		mapper.saveRecord(object);

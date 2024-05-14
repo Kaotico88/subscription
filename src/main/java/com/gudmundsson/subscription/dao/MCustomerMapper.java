@@ -11,7 +11,7 @@ public interface MCustomerMapper {
 
 	public Customer getCustomerById(@Param("recordId") Long recordId) throws RepositoryException;
 	
-	public void saveRecord(@Param("customer") Customer customer);
+	public void saveRecord(@Param("customer") Customer customer) throws RepositoryException;
 	
 	public Long getNextVal();
 }

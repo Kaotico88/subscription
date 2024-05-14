@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 
 import com.gudmundsson.subscription.core.Company;
 import com.gudmundsson.subscription.dao.RCompanyRepository;
+import com.gudmundsson.subscription.util.exception.RepositoryException;
 
 @Service
 public class CompanyService {
@@ -14,11 +15,11 @@ public class CompanyService {
 	@Autowired
 	private RCompanyRepository repository;
 	
-	public Company getCompanyById(Optional<Long> id) {
+	public Company getCompanyById(Optional<Long> id) throws RepositoryException{
 		return repository.getCompanyById(id);
 	}
 	
-	public Company save(Company object) {
+	public Company save(Company object) throws RepositoryException{
 		return repository.save(object);
 	}
 }

@@ -11,7 +11,7 @@ public interface MSubscriptionMapper {
 
 	public Subscription getSubscriptionById(@Param("recordId") long recordId) throws RepositoryException;
 	
-	public void saveRecord(@Param("subscription") Subscription subscription);
+	public void saveRecord(@Param("subscription") Subscription subscription) throws RepositoryException;
 	
 	public Long getNextVal();
 }

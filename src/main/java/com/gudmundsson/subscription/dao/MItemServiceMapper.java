@@ -11,7 +11,7 @@ public interface MItemServiceMapper {
 
 	public ItemService getItemServiceById(@Param("recordId") Long recordId) throws RepositoryException;
 	
-	public void saveRecord(@Param("item_service") ItemService itemService);
+	public void saveRecord(@Param("item_service") ItemService itemService) throws RepositoryException;
 	
 	public Long getNextVal();
 }
