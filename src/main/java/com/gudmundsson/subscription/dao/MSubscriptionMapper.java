@@ -13,5 +13,7 @@ public interface MSubscriptionMapper {
 	
 	public void saveRecord(@Param("subscription") Subscription subscription) throws RepositoryException;
 	
+	public void updateRecord(@Param("subscription") Subscription subscription) throws RepositoryException;
+	
 	public Long getNextVal();
 }

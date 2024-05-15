@@ -11,8 +11,10 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.gudmundsson.subscription.core.Customer;
@@ -99,6 +101,40 @@ public class SubscriptionResource {
 		subscriptionDto.setItemServiceId(itemServiceId);
 		subscriptionDto.copyToCore(responseObj);
 		responseObj = subscriptionService.save(responseObj);
+		
+		if(responseObj == null || responseObj.getSubscriptionId() == null || responseObj.getCustomer().getCustomerId() == null
+				|| responseObj.getItemService().getItemServiceId() == null) {
+			throw new CustomRuntimeException(HttpStatus.CONFLICT, 400,"La subscripcion no se pudo registrar.");
+		}
+		
+		responseHeaders.set("Custom-Message", "HTTP/1.1 201 CREATED");
+        return new ResponseEntity<Subscription>(responseObj, responseHeaders, HttpStatus.CREATED);
+	}
+	
+	@PutMapping("/{subscriptionId}")
+	public ResponseEntity<Subscription> unsubscribe(@PathVariable("subscriptionId") Long subscriptionId,
+			@RequestParam(name = "state") Boolean state , HttpServletRequest request){
+		String sessionLogId = System.currentTimeMillis() + ": ";
+		Subscription responseObj = new Subscription();// este es el objetito
+		HttpHeaders responseHeaders = new HttpHeaders();
+		
+		requestLog(request, sessionLogId);
+		
+		if(subscriptionId == null || subscriptionId <= 0) {
+			throw new CustomRuntimeException(HttpStatus.BAD_REQUEST, 400, "El parametro 'subscriptionId' no es valido.");
+		}
+		
+		if(state == null) {
+			throw new CustomRuntimeException(HttpStatus.BAD_REQUEST, 400, "El parametro 'state' no es valido.");
+		}
+		
+		responseObj = subscriptionService.getSubscriptionById(ofNullable(subscriptionId));
+		if(responseObj == null || responseObj.getSubscriptionId() == null ) {
+			throw new CustomRuntimeException(HttpStatus.BAD_REQUEST, 400,"La  'Subscripcion' no esta registrado .");
+		}
+		
+		responseObj.setState(false);
+		responseObj = subscriptionService.update(responseObj);
 		
 		if(responseObj == null || responseObj.getSubscriptionId() == null || responseObj.getCustomer().getCustomerId() == null
 				|| responseObj.getItemService().getItemServiceId() == null) {

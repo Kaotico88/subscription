@@ -25,6 +25,11 @@ public class RSubscriptionRepository {
 		return object;
 	}
 	
+	public Subscription update(Subscription object) {
+		mapper.updateRecord(object);
+		return object;
+	}
+	
 	public Long nextVal() {
 		return mapper.getNextVal();
 	}

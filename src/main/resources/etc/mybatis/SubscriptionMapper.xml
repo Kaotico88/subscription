@@ -48,6 +48,20 @@
         ]]>
     </insert>
     
+    <update id="updateRecord">
+        UPDATE subscription
+        <set>
+            <if test="subscription.state != null">
+                sub_state = #{subscription.state},
+            </if>           
+                sub_activation_date = CURRENT_TIMESTAMP
+        </set>
+        <where>
+            AND sub_subscription_id = #{subscription.subscriptionId}
+        </where>
+    </update>
+    
+    
     <select id="getNextVal" resultType="java.lang.Long">
         SELECT NEXTVAL('sub_seq')
     </select>   

@@ -7,7 +7,6 @@ import org.springframework.stereotype.Service;
 
 import com.gudmundsson.subscription.core.Subscription;
 import com.gudmundsson.subscription.dao.RSubscriptionRepository;
-import com.gudmundsson.subscription.dto.SubscriptionDto;
 import com.gudmundsson.subscription.util.exception.RepositoryException;
 
 @Service
@@ -24,7 +23,8 @@ public class SubscriptionService {
 		return repository.save(object);
 	}
 	
-	public void register(Subscription object) {
-		
+	public Subscription update(Subscription object) throws RepositoryException{
+		return repository.update(object);
 	}
+	
 }
