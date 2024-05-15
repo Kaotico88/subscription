@@ -17,7 +17,7 @@
     <!-- Queries -->
     
     <!-- *** Este query obtine un client a partir de su campo clientId -->
-    <select id="getCustomertById" resultMap="CustomerResultMap">
+    <select id="getCustomerById" resultMap="CustomerResultMap">
         <![CDATA[
             SELECT *
               FROM customer

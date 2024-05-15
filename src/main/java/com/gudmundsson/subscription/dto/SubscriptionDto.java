@@ -28,6 +28,9 @@ public class SubscriptionDto {
 		object.setItemService(new ItemService());
 		object.getItemService().setItemServiceId(this.itemServiceId);
 	}
+	
+	public SubscriptionDto() {
+	}
 
 	public boolean isState() {
 		return state;

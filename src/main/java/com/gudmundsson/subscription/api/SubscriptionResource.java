@@ -61,13 +61,16 @@ public class SubscriptionResource {
 	}
 	
 	@PostMapping("/customer/{customerId}/itemService/{itemServiceId}/activate")
-	public ResponseEntity<Subscription> save(@PathVariable("customerId") Long customerId, @PathVariable("itemServiceId") Long itemServiceId,
-			@RequestBody SubscriptionDto subscriptionDto ,HttpServletRequest request){
+	public ResponseEntity<Subscription> register(@PathVariable("customerId") Long customerId, @PathVariable("itemServiceId") Long itemServiceId,
+			@RequestBody SubscriptionDto subscriptionDto , HttpServletRequest request){
 		String sessionLogId = System.currentTimeMillis() + ": ";
+		
 		Subscription responseObj = new Subscription();// este es el objetito
 		Customer customer = new Customer();
 		ItemService itemService = new ItemService();
+		
 		HttpHeaders responseHeaders = new HttpHeaders();
+		
 		requestLog(request, sessionLogId);
 		
 		if(customerId == null || customerId <= 0) {
@@ -92,6 +95,8 @@ public class SubscriptionResource {
 			throw new CustomRuntimeException(HttpStatus.BAD_REQUEST, 400, "El 'ItemService' no esta registrado .");
 		}
 		
+		subscriptionDto.setCustomerId(customerId);
+		subscriptionDto.setItemServiceId(itemServiceId);
 		subscriptionDto.copyToCore(responseObj);
 		responseObj = subscriptionService.save(responseObj);
 		
