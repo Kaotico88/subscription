@@ -15,7 +15,7 @@ public class CustomerService {
 	@Autowired
 	private RCustomerRepository repository;
 	
-	public Customer getUserById(Optional<Long> id) throws RepositoryException{
+	public Customer getCustomerById(Optional<Long> id) throws RepositoryException{
 		return repository.getCustomerById(id);
 	}
 	

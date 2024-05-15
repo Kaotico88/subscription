@@ -1,6 +1,6 @@
 package com.gudmundsson.subscription.core;
 
-import java.sql.Date;
+import java.sql.Timestamp;
 
 public class Subscription {
 
@@ -10,7 +10,7 @@ public class Subscription {
 	
 	private Double hoursUsed;
 	
-	private Date activationDate;
+	private Timestamp activationDate;
 	
 	private Customer customer;
 	
@@ -40,11 +40,11 @@ public class Subscription {
 		this.hoursUsed = hoursUsed;
 	}
 
-	public Date getActivationDate() {
+	public Timestamp getActivationDate() {
 		return activationDate;
 	}
 
-	public void setActivationDate(Date activationDate) {
+	public void setActivationDate(Timestamp activationDate) {
 		this.activationDate = activationDate;
 	}
 

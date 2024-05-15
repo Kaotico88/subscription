@@ -1,6 +1,6 @@
 package com.gudmundsson.subscription.core;
 
-import java.sql.Date;
+import java.sql.Timestamp;
 
 public class Invoice {
 
@@ -8,7 +8,7 @@ public class Invoice {
 	
 	private String billingPeriod;
 	
-	private Date issueDate;
+	private Timestamp issueDate;
 	
 	private Double totalAmount;
 	
@@ -30,11 +30,11 @@ public class Invoice {
 		this.billingPeriod = billingPeriod;
 	}
 
-	public Date getIssueDate() {
+	public Timestamp getIssueDate() {
 		return issueDate;
 	}
 
-	public void setIssueDate(Date issueDate) {
+	public void setIssueDate(Timestamp issueDate) {
 		this.issueDate = issueDate;
 	}
 

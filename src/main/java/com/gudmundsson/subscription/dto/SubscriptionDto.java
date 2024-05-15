@@ -1,9 +1,5 @@
 package com.gudmundsson.subscription.dto;
 
-
-
-import java.sql.Date;
-
 import com.gudmundsson.subscription.core.Customer;
 import com.gudmundsson.subscription.core.ItemService;
 import com.gudmundsson.subscription.core.Subscription;
@@ -20,9 +16,6 @@ public class SubscriptionDto {
 	@Min(value = 0, message = "El campo 'amount' no puede ser menor a 0")
 	private double hoursUsed;
 	
-	@NotNull(message = "El campo 'activationDate' no es válido.")
-	private Date activationDate;
-	
 	private Long customerId;
 	
 	private Long itemServiceId;
@@ -30,7 +23,6 @@ public class SubscriptionDto {
 	public void copyToCore(Subscription object) {
 		object.setState(this.state);
 		object.setHoursUsed(this.hoursUsed);
-		object.setActivationDate(this.activationDate);
 		object.setCustomer(new Customer());
 		object.getCustomer().setCustomerId(this.customerId);
 		object.setItemService(new ItemService());
@@ -51,14 +43,6 @@ public class SubscriptionDto {
 
 	public void setHoursUsed(double hoursUsed) {
 		this.hoursUsed = hoursUsed;
-	}
-
-	public Date getActivationDate() {
-		return activationDate;
-	}
-
-	public void setActivationDate(Date activationDate) {
-		this.activationDate = activationDate;
 	}
 
 	public Long getCustomerId() {
