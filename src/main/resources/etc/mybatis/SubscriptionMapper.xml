@@ -48,7 +48,7 @@
         ]]>
     </insert>
     
-    <update id="updateRecord">
+     <update id="updateRecord">
         UPDATE subscription
         <set>
             <if test="subscription.state != null">
@@ -61,8 +61,41 @@
         </where>
     </update>
     
+    <!-- Encontrar todas las suscripciones activas de un cliente específico -->
+    <select id="getSubscriptionsByCustomerId" resultMap="SubscriptionResultMap">
+        <![CDATA[
+            SELECT su.sub_ite_item_service_id, 
+            	   it.ite_name, 
+            	   it.ite_costxhour
+              FROM subscription su
+              JOIN item_service it ON su.sub_ite_item_service_id = it.ite_item_service_id
+        ]]>
+        <where>
+               AND su.sub_cus_customer_id = #{recordId}
+               AND su.sub_state = TRUE       
+        </where>
+    </select>    
+    
+    
+    <!-- Obtener el nombre del usuario y la compañía asociada a una suscripción -->
+     <select id="getCustomerAndCompanyBySubscriptionId" resultMap="SubscriptionResultMap">
+        <![CDATA[
+            SELECT cu.cus_name, 
+            	   co.com_name, 
+            	   cu.cus_customer_id
+              FROM customer cu
+              JOIN subscription su ON cu.cus_customer_id = su.sub_cus_customer_id
+              JOIN item_service it ON su.sub_ite_item_service_id = it.ite_item_service_id
+              JOIN company co ON it.ite_com_company_id = co.com_company_id
+        ]]>
+        <where>
+               AND su.sub_subscription_id = #{recordId}       
+        </where>
+    </select>    
     
     <select id="getNextVal" resultType="java.lang.Long">
         SELECT NEXTVAL('sub_seq')
-    </select>   
+    </select>
+    
+       
 </mapper>

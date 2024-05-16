@@ -17,14 +17,25 @@
     
     <!-- Queries -->
     
-    <!-- *** Este query obtine un client a partir de su campo invoiceId -->
-    <select id="getInvoicetById" resultMap="InvoiceResultMap">
+    <!-- *** Este query obtiene un invoice a partir de su campo invoiceId -->
+    <select id="getInvoiceById" resultMap="InvoiceResultMap">
         <![CDATA[
             SELECT *
               FROM invoice
         ]]>
         <where>
                AND inv_invoice_id = #{recordId}
+        </where>
+    </select>
+    
+    <!-- *** Este query obtiene un invoice a partir de su campo subcriptionId -->
+    <select id="getInvoiceBySubscriptionId" resultMap="InvoiceResultMap">
+        <![CDATA[
+            SELECT *
+              FROM invoice
+        ]]>
+        <where>
+               AND inv_sub_subscription_id = #{recordId}
         </where>
     </select>
     

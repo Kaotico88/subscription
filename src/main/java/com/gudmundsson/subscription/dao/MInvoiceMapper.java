@@ -13,5 +13,7 @@ public interface MInvoiceMapper {
 	
 	public void saveRecord(@Param("invoice")Invoice invoice) throws RepositoryException;
 	
+	public Invoice getInvoiceBySubscriptionId(@Param("recordId") Long recordId) throws RepositoryException;
+	
 	public Long getNextVal();
 }

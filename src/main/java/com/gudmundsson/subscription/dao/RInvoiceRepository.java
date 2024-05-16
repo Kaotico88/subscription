@@ -14,7 +14,7 @@ public class RInvoiceRepository {
 	@Autowired
 	private MInvoiceMapper mapper;
 
-	public Invoice getById(Optional<Long> id) throws RepositoryException {
+	public Invoice getInvoiceById(Optional<Long> id) throws RepositoryException {
 		return mapper.getInvoiceById(id.orElse(null));
 	}
 	
@@ -23,6 +23,10 @@ public class RInvoiceRepository {
 		object.setInvoiceId(id);
 		mapper.saveRecord(object);
 		return object;
+	}
+	
+	public Invoice getInvoiceBySubscriptionId(Optional<Long> id) throws RepositoryException{
+		return mapper.getInvoiceBySubscriptionId(id.orElse(null));
 	}
 	
 	public Long nextVal() {

@@ -133,7 +133,7 @@ public class SubscriptionResource {
 			throw new CustomRuntimeException(HttpStatus.BAD_REQUEST, 400,"La  'Subscripcion' no esta registrado .");
 		}
 		
-		responseObj.setState(false);
+		responseObj.setState(state);
 		responseObj = subscriptionService.update(responseObj);
 		
 		if(responseObj == null || responseObj.getSubscriptionId() == null || responseObj.getCustomer().getCustomerId() == null
