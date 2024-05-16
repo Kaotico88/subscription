@@ -1,5 +1,6 @@
 package com.gudmundsson.subscription.dao;
 
+import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,6 +17,10 @@ public class RSubscriptionRepository {
 
 	public Subscription getSubscriptionById(Optional<Long> id) throws RepositoryException {
 		return mapper.getSubscriptionById(id.orElse(null));
+	}
+	
+	public List<Subscription> getSubscriptionsByCustomerId(Optional<Long> id) throws RepositoryException{
+		return mapper.getSubscriptionsByCustomerId(id.orElse(null));
 	}
 	
 	public Subscription save(Subscription object) throws RepositoryException {
