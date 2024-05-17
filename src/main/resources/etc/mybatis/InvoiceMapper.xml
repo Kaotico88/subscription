@@ -28,17 +28,6 @@
         </where>
     </select>
     
-    <!-- *** Este query obtiene un invoice a partir de su campo subcriptionId -->
-    <select id="getInvoiceBySubscriptionId" resultMap="InvoiceResultMap">
-        <![CDATA[
-            SELECT *
-              FROM invoice
-        ]]>
-        <where>
-               AND inv_sub_subscription_id = #{recordId}
-        </where>
-    </select>
-    
     <!-- *** Este query guarda un registro invoice -->   
     <insert id="saveRecord">
         <![CDATA[
@@ -55,9 +44,20 @@
                         #{invoice.subscription.subscriptionId})
         ]]>
     </insert>
+    
+    <!-- *** Este query obtiene un invoice a partir de su campo subcriptionId -->
+    <select id="getInvoiceBySubscriptionId" resultMap="InvoiceResultMap">
+        <![CDATA[
+            SELECT *
+              FROM invoice
+        ]]>
+        <where>
+               AND inv_sub_subscription_id = #{subscriptionId}
+        </where>
+    </select>
      
     <!-- Obtener el invoices agrupando servicios por compañia -->
-     <select id="getInvoicesByCompany" resultMap="InvoiceResultMap">
+     <select id="getInvoicesByCompanyId" resultMap="InvoiceResultMap">
         <![CDATA[
             SELECT co.com_name,
             	   it.ite_name
@@ -67,7 +67,7 @@
               JOIN invoice i ON su.sub_subscription_id = i.inv_invoice_id
         ]]>
         <where>
-               AND inv_invoice_id = #{recordId}       
+               AND inv_invoice_id = #{invoiceId}       
         </where>
     </select>   
     

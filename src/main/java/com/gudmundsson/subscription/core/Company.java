@@ -48,6 +48,12 @@ public class Company {
 	public void setItemServices(List<ItemService> itemServices) {
 		this.itemServices = itemServices;
 	}
+
+	@Override
+	public String toString() {
+		return "Company [companyId=" + companyId + ", name=" + name + ", address=" + address + ", itemServices="
+				+ itemServices + "]";
+	}
 	
 	
 }

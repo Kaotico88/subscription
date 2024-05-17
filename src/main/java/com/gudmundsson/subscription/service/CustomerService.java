@@ -23,7 +23,7 @@ public class CustomerService {
 		return repository.save(object);
 	}
 	
-	public Customer getCustomerByInvoiceId(Optional<Long> id) throws RepositoryException{
-		return repository.getCustomerByInvoiceId(id);
+	public Customer getCustomerByInvoiceId(Optional<Long> invoiceId) throws RepositoryException{
+		return repository.getCustomerByInvoiceId(invoiceId);
 	}
 }

@@ -47,8 +47,10 @@
     
     <select id="getItemServicesByCompanyId" resultMap="ItemServiceResultMap">
         <![CDATA[
-            SELECT it.ite_name, 
-            	   it.ite_costxhour
+            SELECT it.ite_item_service_id,
+            	   it.ite_name, 
+            	   it.ite_costxhour,
+            	   it.ite_com_company_id
               FROM item_service it
               JOIN company co ON it.ite_com_company_id = co.com_company_id
         ]]>

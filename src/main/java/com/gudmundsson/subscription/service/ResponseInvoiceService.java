@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.gudmundsson.subscription.core.Company;
+import com.gudmundsson.subscription.core.Customer;
 import com.gudmundsson.subscription.core.ItemService;
 import com.gudmundsson.subscription.dto.ResponseInvoiceDto;
 import com.gudmundsson.subscription.dto.core.Data;
@@ -31,13 +32,17 @@ public class ResponseInvoiceService {
 		responseObject.setData(new Data());
 		
 		responseObject.getData().setCustomer(customerService.getCustomerByInvoiceId(invoiceId));
-		
+	
 		List<Company> companies = companyService.getCompaniesByInvoiceId(invoiceId);
 		
-		responseObject.getData().setCompanies(companies);
 //		Lista de itemservices a partir de una companyId que sera el for que recorra esa lista
 		for(Company company : companies) {
 			List<ItemService> itemServices = itemServiceService.getItemServicesByCompanyId(Optional.of(company.getCompanyId()));
+			
+			System.out.println("AAAAAAALa compania es: " + company.getCompanyId());
+			System.out.println("AAAAAAAEste el datolos itemsService x Company: " + itemServices);
+			
+			
 			List<Long> itemServiceIds = itemServices.stream().map(ItemService::getItemServiceId).collect(Collectors.toList());
 			for(Long itemServiceId : itemServiceIds) {
 				ItemService itemService = itemServiceService.getItemServiceById(Optional.of(itemServiceId));

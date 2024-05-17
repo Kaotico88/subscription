@@ -42,6 +42,12 @@ public class Customer {
 		this.totalCostMonth = totalCostMonth;
 	}
 
+	@Override
+	public String toString() {
+		return "Customer [customerId=" + customerId + ", name=" + name + ", email=" + email + ", totalCostMonth="
+				+ totalCostMonth + "]";
+	}
+
 	
 	
 }

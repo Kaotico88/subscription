@@ -1,5 +1,6 @@
 package com.gudmundsson.subscription.dao;
 
+import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,6 +28,10 @@ public class RInvoiceRepository {
 	
 	public Invoice getInvoiceBySubscriptionId(Optional<Long> id) throws RepositoryException{
 		return mapper.getInvoiceBySubscriptionId(id.orElse(null));
+	}
+	
+	public List<Invoice> getInvoicesByCompanyId(Optional<Long> id) throws RepositoryException{
+		return mapper.getInvoicesByCompanyId(id.orElse(null));
 	}
 	
 	public Long nextVal() {

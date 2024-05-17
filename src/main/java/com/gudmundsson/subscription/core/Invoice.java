@@ -54,5 +54,11 @@ public class Invoice {
 		this.subscription = subscription;
 	}
 
+	@Override
+	public String toString() {
+		return "Invoice [invoiceId=" + invoiceId + ", billingPeriod=" + billingPeriod + ", issueDate=" + issueDate
+				+ ", totalAmount=" + totalAmount + ", subscription=" + subscription + "]";
+	}
+
 		
 }

@@ -64,5 +64,12 @@ public class Subscription {
 		this.itemService = itemService;
 	}
 
+	@Override
+	public String toString() {
+		return "Subscription [subscriptionId=" + subscriptionId + ", state=" + state + ", hoursUsed=" + hoursUsed
+				+ ", activationDate=" + activationDate + ", customer=" + customer + ", itemService=" + itemService
+				+ "]";
+	}
+
 	
 }

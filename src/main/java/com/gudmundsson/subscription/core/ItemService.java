@@ -51,6 +51,12 @@ public class ItemService {
 	public void setCompany(Company company) {
 		this.company = company;
 	}
+
+	@Override
+	public String toString() {
+		return "ItemService [itemServiceId=" + itemServiceId + ", name=" + name + ", costHour=" + costHour
+				+ ", description=" + description + ", company=" + company + "]";
+	}
 	
 	
 }

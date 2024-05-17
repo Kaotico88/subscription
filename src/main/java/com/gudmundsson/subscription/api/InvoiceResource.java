@@ -23,7 +23,7 @@ import com.gudmundsson.subscription.util.exception.response.custom.CustomRuntime
 import jakarta.servlet.http.HttpServletRequest;
 
 @RestController
-@RequestMapping("/api/v1/invoice")
+@RequestMapping("/api/v1/invoices")
 public class InvoiceResource {
 
 	private static final Logger logger = LoggerFactory.getLogger(InvoiceResource.class);
@@ -41,7 +41,7 @@ public class InvoiceResource {
 		HttpHeaders responseHeaders = new HttpHeaders();
 		requestLog(request, "X: ");
 
-		object = new HealthMessage("Service is operating normally in MOBILE!!");
+		object = new HealthMessage("Service is operating normally in Invoice!!");
 
 		responseHeaders.set("Custom-Message", "HTTP/1.1 200 OK");
 		return new ResponseEntity<Object>(object, responseHeaders, HttpStatus.OK);
@@ -49,7 +49,7 @@ public class InvoiceResource {
 	
 	
 	@GetMapping("/{invoiceId}")
-	public ResponseEntity<ResponseInvoiceDto> getInvoiceClientB(@PathVariable("invoiceId") Long invoiceId,
+	public ResponseEntity<ResponseInvoiceDto> getInvoice(@PathVariable("invoiceId") Long invoiceId,
 			HttpServletRequest request) {
 
 		String sessionLogId = System.currentTimeMillis() + ": ";
