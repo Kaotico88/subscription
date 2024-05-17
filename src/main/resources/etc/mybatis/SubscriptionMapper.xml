@@ -59,7 +59,7 @@
         <where>
             AND sub_subscription_id = #{subscription.subscriptionId}
         </where>
-    </update>
+    </update> 
     
     <!-- Encontrar todas las suscripciones activas de un cliente específico -->
     <select id="getSubscriptionsByCustomerId" resultMap="SubscriptionResultMap">
@@ -91,11 +91,10 @@
         <where>
                AND su.sub_subscription_id = #{recordId}       
         </where>
-    </select>    
-    
+    </select>
+       
     <select id="getNextVal" resultType="java.lang.Long">
         SELECT NEXTVAL('sub_seq')
     </select>
-    
-       
+         
 </mapper>

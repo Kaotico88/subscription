@@ -22,4 +22,8 @@ public class CustomerService {
 	public Customer save(Customer object) throws RepositoryException{
 		return repository.save(object);
 	}
+	
+	public Customer getCustomerByInvoiceId(Optional<Long> id) throws RepositoryException{
+		return repository.getCustomerByInvoiceId(id);
+	}
 }

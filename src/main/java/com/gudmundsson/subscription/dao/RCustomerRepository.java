@@ -25,6 +25,10 @@ public class RCustomerRepository {
 		return object;
 	}
 	
+	public Customer getCustomerByInvoiceId(Optional<Long> invoiceId) throws RepositoryException {
+		return mapper.getCustomerByInvoiceId(invoiceId.orElse(null));
+	}
+	
 	public Long nextVal() {
 		return mapper.getNextVal();
 	}

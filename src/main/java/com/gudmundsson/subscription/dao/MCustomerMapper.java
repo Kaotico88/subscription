@@ -13,5 +13,7 @@ public interface MCustomerMapper {
 	
 	public void saveRecord(@Param("customer") Customer customer) throws RepositoryException;
 	
+	public Customer getCustomerByInvoiceId(@Param("invoiceId") Long invoiceId) throws RepositoryException;
+	
 	public Long getNextVal();
 }
