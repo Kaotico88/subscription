@@ -3,18 +3,18 @@ package com.gudmundsson.subscription.dto.core;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.gudmundsson.subscription.core.Company;
 import com.gudmundsson.subscription.core.Customer;
-import com.gudmundsson.subscription.core.Invoice;
 
 
 public class Data {
 
 	private Customer customer;
 	
-	private List<Invoice> invoices;
+	private List<Company> companies;
 	
 	public Data() {
-		this.invoices = new ArrayList<>();
+		this.companies = new ArrayList<>();
 	}
 
 	public Customer getCustomer() {
@@ -25,13 +25,12 @@ public class Data {
 		this.customer = customer;
 	}
 
-	public List<Invoice> getInvoices() {
-		return invoices;
+	public List<Company> getCompanies() {
+		return companies;
 	}
 
-	public void setInvoiceDto(List<Invoice> invoices) {
-		this.invoices = invoices;
+	public void setCompanies(List<Company> companies) {
+		this.companies = companies;
 	}
-	
 	
 }

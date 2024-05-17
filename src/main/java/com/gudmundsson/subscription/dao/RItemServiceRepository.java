@@ -1,5 +1,6 @@
 package com.gudmundsson.subscription.dao;
 
+import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,6 +24,10 @@ public class RItemServiceRepository {
 		object.setItemServiceId(id);
 		mapper.saveRecord(object);
 		return object;
+	}
+	
+	public List<ItemService> getItemServicesByCompanyId(Optional<Long> companyId) throws RepositoryException {
+		return mapper.getItemServicesByCompanyId(companyId.orElse(null));
 	}
 	
 	public Long nextVal() {

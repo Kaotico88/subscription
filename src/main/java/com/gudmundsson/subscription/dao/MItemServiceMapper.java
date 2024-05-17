@@ -1,5 +1,7 @@
 package com.gudmundsson.subscription.dao;
 
+import java.util.List;
+
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 
@@ -12,6 +14,8 @@ public interface MItemServiceMapper {
 	public ItemService getItemServiceById(@Param("recordId") Long recordId) throws RepositoryException;
 	
 	public void saveRecord(@Param("item_service") ItemService itemService) throws RepositoryException;
+	
+	public List<ItemService> getItemServicesByCompanyId(@Param("companyId") Long companyId) throws RepositoryException;
 	
 	public Long getNextVal();
 }

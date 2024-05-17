@@ -45,6 +45,18 @@
         ]]>
     </insert>
     
+    <select id="getItemServicesByCompanyId" resultMap="ItemServiceResultMap">
+        <![CDATA[
+            SELECT it.ite_name, 
+            	   it.ite_costxhour
+              FROM item_service it
+              JOIN company co ON it.ite_com_company_id = co.com_company_id
+        ]]>
+        <where>
+               AND co.com_company_id = #{companyId}
+        </where>
+    </select>  
+    
     <select id="getNextVal" resultType="java.lang.Long">
         SELECT NEXTVAL('ite_seq')
     </select>  

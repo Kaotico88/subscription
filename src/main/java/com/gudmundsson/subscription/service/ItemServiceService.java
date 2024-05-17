@@ -1,5 +1,6 @@
 package com.gudmundsson.subscription.service;
 
+import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,4 +24,7 @@ public class ItemServiceService {
 		return repository.save(object);
 	}
 	
+	public List<ItemService> getItemServicesByCompanyId(Optional<Long> companyId) throws RepositoryException{
+		return repository.getItemServicesByCompanyId(companyId);
+	}
 }

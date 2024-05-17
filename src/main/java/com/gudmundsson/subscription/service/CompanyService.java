@@ -1,5 +1,6 @@
 package com.gudmundsson.subscription.service;
 
+import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,5 +22,9 @@ public class CompanyService {
 	
 	public Company save(Company object) throws RepositoryException{
 		return repository.save(object);
+	}
+	
+	public List<Company> getCompaniesByInvoiceId(Optional<Long> invoiceId) throws RepositoryException{
+		return repository.getCompaniesByInvoiceId(invoiceId);
 	}
 }
