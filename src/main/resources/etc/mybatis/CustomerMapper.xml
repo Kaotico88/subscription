@@ -45,7 +45,8 @@
      <!-- Obtener un cliente a partir del invoiceId -->
     <select id="getCustomerByInvoiceId" resultMap="CustomerResultMap">
         <![CDATA[
-            SELECT cu.cus_name,
+            SELECT cu.cus_customer_id,
+            	   cu.cus_name,
             	   cu.cus_email	
               FROM customer cu
               JOIN subscription su ON cu.cus_customer_id = su.sub_cus_customer_id

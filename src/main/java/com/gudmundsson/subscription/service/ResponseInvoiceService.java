@@ -1,5 +1,6 @@
 package com.gudmundsson.subscription.service;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -35,19 +36,23 @@ public class ResponseInvoiceService {
 	
 		List<Company> companies = companyService.getCompaniesByInvoiceId(invoiceId);
 		
-//		Lista de itemservices a partir de una companyId que sera el for que recorra esa lista
 		for(Company company : companies) {
-			List<ItemService> itemServices = itemServiceService.getItemServicesByCompanyId(Optional.of(company.getCompanyId()));
+			List<ItemService> itemServicesxCompany = itemServiceService.getItemServicesByCompanyId(Optional.of(company.getCompanyId()));
 			
-			System.out.println("AAAAAAALa compania es: " + company.getCompanyId());
-			System.out.println("AAAAAAAEste el datolos itemsService x Company: " + itemServices);
+//			List<Long> itemServiceIds = itemServicesxCompany.stream().map(ItemService::getItemServiceId).collect(Collectors.toList());
 			
+			List<ItemService> itemServices = new ArrayList<>();
 			
-			List<Long> itemServiceIds = itemServices.stream().map(ItemService::getItemServiceId).collect(Collectors.toList());
-			for(Long itemServiceId : itemServiceIds) {
-				ItemService itemService = itemServiceService.getItemServiceById(Optional.of(itemServiceId));
+//			for(Long itemServiceId : itemServiceIds) {
+//				ItemService itemService = itemServiceService.getItemServiceById(Optional.of(itemServiceId));
+//				itemServices = new ArrayList<>();
+//				itemServices.add(itemService);
+//			}
+			for(ItemService itemService : itemServicesxCompany) {
 				itemServices.add(itemService);
 			}
+			
+			company.setItemServices(itemServices);
 		}
 
 		responseObject.getData().setCompanies(companies);
