@@ -23,6 +23,10 @@ public class RSubscriptionRepository {
 		return mapper.getSubscriptionsByCustomerId(id.orElse(null));
 	}
 	
+	public List<Subscription> getSubscriptionsByInvoiceId(Optional<Long> invoiceId) throws RepositoryException{
+		return mapper.getSubscriptionsByInvoiceId(invoiceId.orElse(null));
+	}
+	
 	public Subscription save(Subscription object) throws RepositoryException {
 		long id = nextVal();
 		object.setSubscriptionId(id);

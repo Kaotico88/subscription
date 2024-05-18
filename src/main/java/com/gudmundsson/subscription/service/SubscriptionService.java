@@ -1,5 +1,6 @@
 package com.gudmundsson.subscription.service;
 
+import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,6 +20,10 @@ public class SubscriptionService {
 		return repository.getSubscriptionById(id);
 	}
 
+	public List<Subscription> getSubscriptionsByInvoiceId(Optional<Long> invoiceId) throws RepositoryException{
+		return repository.getSubscriptionsByInvoiceId(invoiceId);
+	}
+	
 	public Subscription save(Subscription object) throws RepositoryException {
 		return repository.save(object);
 	}

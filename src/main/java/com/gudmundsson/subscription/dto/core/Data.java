@@ -4,10 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.gudmundsson.subscription.core.Company;
-import com.gudmundsson.subscription.core.Invoice;
-//import com.gudmundsson.subscription.core.Customer;
 import com.gudmundsson.subscription.dto.CustomerDto;
-import com.gudmundsson.subscription.dto.InvoiceDto;
 import com.gudmundsson.subscription.dto.InvoiceDto2;
 
 
@@ -22,8 +19,6 @@ public class Data {
 	public Data() {
 		this.companies = new ArrayList<>();
 	}
-	
-	
 
 	public InvoiceDto2 getInvoice() {
 		return invoice;

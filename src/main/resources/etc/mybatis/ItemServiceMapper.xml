@@ -57,7 +57,21 @@
         <where>
                AND co.com_company_id = #{companyId}
         </where>
-    </select>  
+    </select>
+    
+    <select id="getItemServiceBySubscriptionId" resultMap="ItemServiceResultMap">
+        <![CDATA[
+            SELECT it.ite_item_service_id,
+            	   it.ite_name, 
+            	   it.ite_costxhour,
+            	   it.ite_com_company_id
+              FROM item_service it
+              JOIN subscription su ON it.ite_item_service_id = su.sub_ite_item_service_id
+        ]]>
+        <where>
+               AND co.com_company_id = #{companyId}
+        </where>
+    </select>    
     
     <select id="getNextVal" resultType="java.lang.Long">
         SELECT NEXTVAL('ite_seq')

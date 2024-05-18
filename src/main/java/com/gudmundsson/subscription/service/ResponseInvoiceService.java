@@ -10,6 +10,7 @@ import org.springframework.stereotype.Service;
 import com.gudmundsson.subscription.core.Company;
 import com.gudmundsson.subscription.core.Invoice;
 import com.gudmundsson.subscription.core.ItemService;
+import com.gudmundsson.subscription.core.Subscription;
 import com.gudmundsson.subscription.dto.CustomerDto;
 import com.gudmundsson.subscription.dto.InvoiceDto2;
 import com.gudmundsson.subscription.dto.ItemServiceDto;
@@ -31,6 +32,9 @@ public class ResponseInvoiceService {
 	
 	@Autowired
 	private InvoiceService invoiceservice;
+	
+	@Autowired
+	private SubscriptionService subscriptionService;
 
 	public ResponseInvoiceDto getInvoiceDetails(Optional<Long> invoiceId, String sessionLogId)
 			throws RepositoryException {
@@ -45,6 +49,10 @@ public class ResponseInvoiceService {
 		invoiceDto2.setIssueDate(invoice.getIssueDate());
 		invoiceDto2.setSubscriptionId(invoice.getSubscription().getSubscriptionId());
 		
+//		Calcular el costo total de los servicios
+		List<Subscription> subscriptions = subscriptionService.getSubscriptionsByInvoiceId(invoiceId);
+		double totalCost = calculateTotalCost(subscriptions);
+		invoiceDto2.setTotalAmount(totalCost);
 		
 		responseObject.getData().setInvoice(invoiceDto2);
 		
@@ -77,4 +85,21 @@ public class ResponseInvoiceService {
 
 		return responseObject;
 	}
+	
+	public Double calculateTotalCost(List<Subscription> subscriptions) {
+		
+		double totalCost = 0.0;
+		System.out.println("AAAAAAAEste es el valor del estado de la subscription: " + subscriptions);
+		for(Subscription subscription : subscriptions) {			
+			if(subscription.getState()) {
+				double costPerHour = subscription.getItemService().getCostHour();
+				
+				double hoursUsed = subscription.getHoursUsed();
+				totalCost += costPerHour * hoursUsed;
+			}
+		}
+		return totalCost;
+	}
+	
+	
 }
