@@ -7,11 +7,13 @@ import com.gudmundsson.subscription.core.Company;
 import com.gudmundsson.subscription.core.Invoice;
 //import com.gudmundsson.subscription.core.Customer;
 import com.gudmundsson.subscription.dto.CustomerDto;
+import com.gudmundsson.subscription.dto.InvoiceDto;
+import com.gudmundsson.subscription.dto.InvoiceDto2;
 
 
 public class Data {
 
-	private Invoice invoice;
+	private InvoiceDto2 invoice;
 	
 	private CustomerDto customer;
 	
@@ -20,12 +22,14 @@ public class Data {
 	public Data() {
 		this.companies = new ArrayList<>();
 	}
+	
+	
 
-	public Invoice getInvoice() {
+	public InvoiceDto2 getInvoice() {
 		return invoice;
 	}
 
-	public void setInvoice(Invoice invoice) {
+	public void setInvoice(InvoiceDto2 invoice) {
 		this.invoice = invoice;
 	}
 

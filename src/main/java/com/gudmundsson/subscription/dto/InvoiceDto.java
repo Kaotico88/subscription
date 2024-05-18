@@ -4,12 +4,12 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class InvoiceDto {
-
+	
 	private CompanyDto companyDto;
 	
 	private List<ItemServiceDto> itemServiceDtos;
 	
-	private double totalAmount;
+//	private double totalAmount;
 
 	public InvoiceDto() { 
 		this.itemServiceDtos = new ArrayList<>();
@@ -31,13 +31,15 @@ public class InvoiceDto {
 		this.itemServiceDtos = itemServiceDtos;
 	}
 
-	public double getTotalAmount() {
-		return totalAmount;
-	}
+//	public double getTotalAmount() {
+//		return totalAmount;
+//	}
+//
+//	public void setTotalAmount(double totalAmount) {
+//		this.totalAmount = totalAmount;
+//	}
 
-	public void setTotalAmount(double totalAmount) {
-		this.totalAmount = totalAmount;
-	}
+	
 	
 	
 }

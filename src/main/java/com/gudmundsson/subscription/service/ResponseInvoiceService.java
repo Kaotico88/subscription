@@ -11,6 +11,8 @@ import com.gudmundsson.subscription.core.Company;
 import com.gudmundsson.subscription.core.Invoice;
 import com.gudmundsson.subscription.core.ItemService;
 import com.gudmundsson.subscription.dto.CustomerDto;
+import com.gudmundsson.subscription.dto.InvoiceDto;
+import com.gudmundsson.subscription.dto.InvoiceDto2;
 import com.gudmundsson.subscription.dto.ItemServiceDto;
 import com.gudmundsson.subscription.dto.ResponseInvoiceDto;
 import com.gudmundsson.subscription.dto.core.Data;
@@ -37,8 +39,15 @@ public class ResponseInvoiceService {
 		ResponseInvoiceDto responseObject = new ResponseInvoiceDto();
 		responseObject.setData(new Data());
 		
+//		Empezamos a settear el invoice con los datos que se require
 		Invoice invoice = invoiceservice.getInvoiceById(invoiceId);
-		responseObject.getData().setInvoice(invoice);
+		InvoiceDto2 invoiceDto2 = new InvoiceDto2();
+		invoiceDto2.setBillingPeriod(invoice.getBillingPeriod());
+		invoiceDto2.setIssueDate(invoice.getIssueDate());
+		invoiceDto2.setSubscriptionId(invoice.getSubscription().getSubscriptionId());
+		
+		
+		responseObject.getData().setInvoice(invoiceDto2);
 		
 //		Este "customer" es un Dto por si caso....
 		CustomerDto customer = new CustomerDto();
