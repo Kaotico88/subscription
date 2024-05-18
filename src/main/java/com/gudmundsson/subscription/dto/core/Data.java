@@ -4,12 +4,13 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.gudmundsson.subscription.core.Company;
-import com.gudmundsson.subscription.core.Customer;
+//import com.gudmundsson.subscription.core.Customer;
+import com.gudmundsson.subscription.dto.CustomerDto;
 
 
 public class Data {
 
-	private Customer customer;
+	private CustomerDto customerDto;
 	
 	private List<Company> companies;
 	
@@ -17,12 +18,12 @@ public class Data {
 		this.companies = new ArrayList<>();
 	}
 
-	public Customer getCustomer() {
-		return customer;
+	public CustomerDto getCustomer() {
+		return customerDto;
 	}
 
-	public void setCustomer(Customer customer) {
-		this.customer = customer;
+	public void setCustomerDto(CustomerDto customerDto) {
+		this.customerDto = customerDto;
 	}
 
 	public List<Company> getCompanies() {

@@ -3,6 +3,8 @@ package com.gudmundsson.subscription.core;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.gudmundsson.subscription.dto.ItemServiceDto;
+
 public class Company {
 
 	private Long companyId;
@@ -11,10 +13,11 @@ public class Company {
 	
 	private String address;
 	
-	private List<ItemService> itemServices;
+//	private List<ItemService> itemServices;
+	private List<ItemServiceDto> itemServicedtos;
 	
 	public Company() {
-		this.itemServices = new ArrayList<>();
+		this.itemServicedtos = new ArrayList<>();
 	}
 
 	public Long getCompanyId() {
@@ -41,18 +44,18 @@ public class Company {
 		this.address = address;
 	}
 
-	public List<ItemService> getItemServices() {
-		return itemServices;
+	public List<ItemServiceDto> getItemServicedtos() {
+		return itemServicedtos;
 	}
 
-	public void setItemServices(List<ItemService> itemServices) {
-		this.itemServices = itemServices;
+	public void setItemServicedtos(List<ItemServiceDto> itemServicedtos) {
+		this.itemServicedtos = itemServicedtos;
 	}
 
 	@Override
 	public String toString() {
-		return "Company [companyId=" + companyId + ", name=" + name + ", address=" + address + ", itemServices="
-				+ itemServices + "]";
+		return "Company [companyId=" + companyId + ", name=" + name + ", address=" + address + ", itemServicedtos="
+				+ itemServicedtos + "]";
 	}
 	
 	
