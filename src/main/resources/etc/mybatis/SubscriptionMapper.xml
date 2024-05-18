@@ -53,7 +53,10 @@
         <set>
             <if test="subscription.state != null">
                 sub_state = #{subscription.state},
-            </if>           
+            </if>
+            <if test="subscription.hoursUsed != null">
+                sub_hours_used = #{subscription.hoursUsed},
+            </if>            
                 sub_activation_date = CURRENT_TIMESTAMP
         </set>
         <where>

@@ -11,7 +11,6 @@ import com.gudmundsson.subscription.core.Company;
 import com.gudmundsson.subscription.core.Invoice;
 import com.gudmundsson.subscription.core.ItemService;
 import com.gudmundsson.subscription.dto.CustomerDto;
-import com.gudmundsson.subscription.dto.InvoiceDto;
 import com.gudmundsson.subscription.dto.InvoiceDto2;
 import com.gudmundsson.subscription.dto.ItemServiceDto;
 import com.gudmundsson.subscription.dto.ResponseInvoiceDto;

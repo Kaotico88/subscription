@@ -113,7 +113,8 @@ public class SubscriptionResource {
 	
 	@PutMapping("/{subscriptionId}")
 	public ResponseEntity<Subscription> unsubscribe(@PathVariable("subscriptionId") Long subscriptionId,
-			@RequestParam(name = "state") Boolean state , HttpServletRequest request){
+			@RequestParam(name = "state") Boolean state, @RequestParam(name = "hoursUsed") Double hoursUsed, 
+			HttpServletRequest request){
 		String sessionLogId = System.currentTimeMillis() + ": ";
 		Subscription responseObj = new Subscription();// este es el objetito
 		HttpHeaders responseHeaders = new HttpHeaders();
@@ -129,11 +130,13 @@ public class SubscriptionResource {
 		}
 		
 		responseObj = subscriptionService.getSubscriptionById(ofNullable(subscriptionId));
+		
 		if(responseObj == null || responseObj.getSubscriptionId() == null ) {
 			throw new CustomRuntimeException(HttpStatus.BAD_REQUEST, 400,"La  'Subscripcion' no esta registrado .");
 		}
 		
 		responseObj.setState(state);
+		responseObj.setHoursUsed(hoursUsed);
 		responseObj = subscriptionService.update(responseObj);
 		
 		if(responseObj == null || responseObj.getSubscriptionId() == null || responseObj.getCustomer().getCustomerId() == null
