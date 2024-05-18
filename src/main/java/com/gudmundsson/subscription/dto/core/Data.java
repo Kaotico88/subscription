@@ -13,7 +13,7 @@ public class Data {
 
 	private Invoice invoice;
 	
-	private CustomerDto customerDto;
+	private CustomerDto customer;
 	
 	private List<Company> companies;
 	
@@ -29,16 +29,12 @@ public class Data {
 		this.invoice = invoice;
 	}
 
-	public CustomerDto getCustomerDto() {
-		return customerDto;
-	}
-
 	public CustomerDto getCustomer() {
-		return customerDto;
+		return customer;
 	}
 
-	public void setCustomerDto(CustomerDto customerDto) {
-		this.customerDto = customerDto;
+	public void setCustomer(CustomerDto customer) {
+		this.customer = customer;
 	}
 
 	public List<Company> getCompanies() {

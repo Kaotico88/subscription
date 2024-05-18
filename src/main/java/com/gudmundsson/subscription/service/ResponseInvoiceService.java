@@ -8,7 +8,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.gudmundsson.subscription.core.Company;
-import com.gudmundsson.subscription.core.Customer;
 import com.gudmundsson.subscription.core.Invoice;
 import com.gudmundsson.subscription.core.ItemService;
 import com.gudmundsson.subscription.dto.CustomerDto;
@@ -39,15 +38,13 @@ public class ResponseInvoiceService {
 		responseObject.setData(new Data());
 		
 		Invoice invoice = invoiceservice.getInvoiceById(invoiceId);
+		responseObject.getData().setInvoice(invoice);
 		
-//		responseObject.getData().setCustomer(customerService.getCustomerByInvoiceId(invoiceId));
-		
-		Customer customer = customerService.getCustomerByInvoiceId(invoiceId);
-		CustomerDto customerDto = new CustomerDto();
-		customerDto.setName(customer.getName());
-		customerDto.setEmail(customer.getEmail());
-		
-//		responseObject.getData().setCustomerDto(customerDto);
+//		Este "customer" es un Dto por si caso....
+		CustomerDto customer = new CustomerDto();
+		customer.setName(customerService.getCustomerByInvoiceId(invoiceId).getName());
+		customer.setEmail(customerService.getCustomerByInvoiceId(invoiceId).getEmail());
+		responseObject.getData().setCustomer(customer);
 
 		List<Company> companies = companyService.getCompaniesByInvoiceId(invoiceId);
 
@@ -65,11 +62,9 @@ public class ResponseInvoiceService {
 				itemServiceDto.setCompanyId(itemService.getCompany().getCompanyId());
 				itemServiceDtos.add(itemServiceDto);
 			}
-			company.setItemServicedtos(itemServiceDtos);
+			company.setItemServiceDtos(itemServiceDtos);
 		}
 		
-		responseObject.getData().setInvoice(invoice);
-		responseObject.getData().setCustomerDto(customerDto);
 		responseObject.getData().setCompanies(companies);
 
 		return responseObject;

@@ -13,11 +13,10 @@ public class Company {
 	
 	private String address;
 	
-//	private List<ItemService> itemServices;
-	private List<ItemServiceDto> itemServicedtos;
+	private List<ItemServiceDto> itemServiceDtos;
 	
 	public Company() {
-		this.itemServicedtos = new ArrayList<>();
+		this.itemServiceDtos = new ArrayList<>();
 	}
 
 	public Long getCompanyId() {
@@ -44,18 +43,18 @@ public class Company {
 		this.address = address;
 	}
 
-	public List<ItemServiceDto> getItemServicedtos() {
-		return itemServicedtos;
+	public List<ItemServiceDto> getItemServiceDtos() {
+		return itemServiceDtos;
 	}
 
-	public void setItemServicedtos(List<ItemServiceDto> itemServicedtos) {
-		this.itemServicedtos = itemServicedtos;
+	public void setItemServiceDtos(List<ItemServiceDto> itemServiceDtos) {
+		this.itemServiceDtos = itemServiceDtos;
 	}
 
 	@Override
 	public String toString() {
-		return "Company [companyId=" + companyId + ", name=" + name + ", address=" + address + ", itemServicedtos="
-				+ itemServicedtos + "]";
+		return "Company [companyId=" + companyId + ", name=" + name + ", address=" + address + ", itemServiceDtos="
+				+ itemServiceDtos + "]";
 	}
 	
 	
