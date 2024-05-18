@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 
 import com.gudmundsson.subscription.core.Company;
 import com.gudmundsson.subscription.core.Customer;
+import com.gudmundsson.subscription.core.Invoice;
 import com.gudmundsson.subscription.core.ItemService;
 import com.gudmundsson.subscription.dto.CustomerDto;
 import com.gudmundsson.subscription.dto.ItemServiceDto;
@@ -27,13 +28,18 @@ public class ResponseInvoiceService {
 
 	@Autowired
 	private ItemServiceService itemServiceService;
+	
+	@Autowired
+	private InvoiceService invoiceservice;
 
 	public ResponseInvoiceDto getInvoiceDetails(Optional<Long> invoiceId, String sessionLogId)
 			throws RepositoryException {
 
 		ResponseInvoiceDto responseObject = new ResponseInvoiceDto();
 		responseObject.setData(new Data());
-
+		
+		Invoice invoice = invoiceservice.getInvoiceById(invoiceId);
+		
 //		responseObject.getData().setCustomer(customerService.getCustomerByInvoiceId(invoiceId));
 		
 		Customer customer = customerService.getCustomerByInvoiceId(invoiceId);
@@ -41,7 +47,7 @@ public class ResponseInvoiceService {
 		customerDto.setName(customer.getName());
 		customerDto.setEmail(customer.getEmail());
 		
-		responseObject.getData().setCustomerDto(customerDto);
+//		responseObject.getData().setCustomerDto(customerDto);
 
 		List<Company> companies = companyService.getCompaniesByInvoiceId(invoiceId);
 
@@ -61,7 +67,9 @@ public class ResponseInvoiceService {
 			}
 			company.setItemServicedtos(itemServiceDtos);
 		}
-
+		
+		responseObject.getData().setInvoice(invoice);
+		responseObject.getData().setCustomerDto(customerDto);
 		responseObject.getData().setCompanies(companies);
 
 		return responseObject;
