@@ -15,6 +15,8 @@ public interface MInvoiceMapper {
 	
 	public void saveRecord(@Param("invoice")Invoice invoice) throws RepositoryException;
 	
+	public void updateRecord(@Param("invoice")Invoice invoice) throws RepositoryException;
+	
 	public Invoice getInvoiceBySubscriptionId(@Param("subscriptionId") Long subscriptionId) throws RepositoryException;
 	
 	public List<Invoice> getInvoicesByCompanyId(@Param("invoiceId") Long invoiceId) throws RepositoryException;

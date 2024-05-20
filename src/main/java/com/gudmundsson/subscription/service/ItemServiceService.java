@@ -27,4 +27,8 @@ public class ItemServiceService {
 	public List<ItemService> getItemServicesByCompanyId(Optional<Long> companyId) throws RepositoryException{
 		return repository.getItemServicesByCompanyId(companyId);
 	}
+	
+	public ItemService getItemServiceBySubscriptionId(Optional<Long> subscriptionId) throws RepositoryException{
+		return repository.getItemServiceBySubscriptionId(subscriptionId);
+	}
 }

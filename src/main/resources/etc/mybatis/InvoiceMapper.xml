@@ -69,7 +69,20 @@
         <where>
                AND inv_invoice_id = #{invoiceId}       
         </where>
-    </select>   
+    </select>
+    
+    <update id="updateRecord">
+        UPDATE invoice
+        <set>
+            <if test="invoice.totalAmount != null">
+                inv_total_amount = #{invoice.totalAmount},
+            </if>           
+         <!--   sub_activation_date = CURRENT_TIMESTAMP -->
+        </set>
+        <where>
+            AND inv_invoice_id = #{invoice.invoiceId}
+        </where>
+    </update>    
     
     <select id="getNextVal" resultType="java.lang.Long">
         SELECT NEXTVAL('inv_seq')

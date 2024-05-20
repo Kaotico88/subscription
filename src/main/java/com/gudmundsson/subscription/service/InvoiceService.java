@@ -19,4 +19,8 @@ public class InvoiceService {
 		return repository.getInvoiceById(id);
 	}
 	
+	public Invoice update(Invoice object) throws RepositoryException{
+		return repository.update(object);
+	}
+	
 }

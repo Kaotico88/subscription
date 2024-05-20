@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.gudmundsson.subscription.dto.HealthMessage;
 import com.gudmundsson.subscription.dto.ResponseInvoiceDto;
+import com.gudmundsson.subscription.service.InvoiceService;
 import com.gudmundsson.subscription.service.ResponseInvoiceService;
 import com.gudmundsson.subscription.util.AElog;
 import com.gudmundsson.subscription.util.AEutil;
@@ -33,6 +34,9 @@ public class InvoiceResource {
 	
 	 @Autowired
 	 private ResponseInvoiceService responseInvoiceService;
+	 
+	 @Autowired 
+	 private InvoiceService invoiceService;
 	
 	@GetMapping("/status")
 	public ResponseEntity<Object> healthRequest(HttpServletRequest request) throws Exception {
@@ -61,7 +65,6 @@ public class InvoiceResource {
 			throw new CustomRuntimeException(HttpStatus.BAD_REQUEST, 400, "El parametro 'invoiceId' no es valido");
 		}
 
-		
 		responseObj = responseInvoiceService.getInvoiceDetails(ofNullable(invoiceId), sessionLogId);
 
 		if (responseObj == null) {

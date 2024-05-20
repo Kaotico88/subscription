@@ -31,7 +31,7 @@ public class ResponseInvoiceService {
 	private ItemServiceService itemServiceService;
 	
 	@Autowired
-	private InvoiceService invoiceservice;
+	private InvoiceService invoiceService;
 	
 	@Autowired
 	private SubscriptionService subscriptionService;
@@ -43,7 +43,7 @@ public class ResponseInvoiceService {
 		responseObject.setData(new Data());
 		
 //		Empezamos a settear el invoice con los datos que se require
-		Invoice invoice = invoiceservice.getInvoiceById(invoiceId);
+		Invoice invoice = invoiceService.getInvoiceById(invoiceId);
 		InvoiceDto2 invoiceDto2 = new InvoiceDto2();
 		invoiceDto2.setBillingPeriod(invoice.getBillingPeriod());
 		invoiceDto2.setIssueDate(invoice.getIssueDate());
@@ -52,8 +52,12 @@ public class ResponseInvoiceService {
 //		Calcular el costo total de los servicios
 		List<Subscription> subscriptions = subscriptionService.getSubscriptionsByInvoiceId(invoiceId);
 		double totalCost = calculateTotalCost(subscriptions);
+		invoice.setTotalAmount(totalCost);
+		invoiceService.update(invoice);
+		
 		invoiceDto2.setTotalAmount(totalCost);
 		
+//		aca debo setear el monto total
 		responseObject.getData().setInvoice(invoiceDto2);
 		
 //		Este "customer" es un Dto por si caso....
@@ -89,11 +93,11 @@ public class ResponseInvoiceService {
 	public Double calculateTotalCost(List<Subscription> subscriptions) {
 		
 		double totalCost = 0.0;
-		System.out.println("AAAAAAAEste es el valor del estado de la subscription: " + subscriptions);
+
 		for(Subscription subscription : subscriptions) {			
 			if(subscription.getState()) {
-				double costPerHour = subscription.getItemService().getCostHour();
-				
+				ItemService item = itemServiceService.getItemServiceBySubscriptionId(Optional.of(subscription.getSubscriptionId()));
+				double costPerHour = item.getCostHour();
 				double hoursUsed = subscription.getHoursUsed();
 				totalCost += costPerHour * hoursUsed;
 			}

@@ -26,10 +26,16 @@ public class RItemServiceRepository {
 		return object;
 	}
 	
+	
+	
 	public List<ItemService> getItemServicesByCompanyId(Optional<Long> companyId) throws RepositoryException {
 		return mapper.getItemServicesByCompanyId(companyId.orElse(null));
 	}
 	
+	public ItemService getItemServiceBySubscriptionId(Optional<Long> subscriptionId) throws RepositoryException{
+		return mapper.getItemServiceBySubscriptionId(subscriptionId.orElse(null));
+	}
+	 
 	public Long nextVal() {
 		return mapper.getNextVal();
 	}
