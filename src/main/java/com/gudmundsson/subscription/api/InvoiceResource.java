@@ -15,7 +15,6 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.gudmundsson.subscription.dto.HealthMessage;
 import com.gudmundsson.subscription.dto.ResponseInvoiceDto;
-import com.gudmundsson.subscription.service.InvoiceService;
 import com.gudmundsson.subscription.service.ResponseInvoiceService;
 import com.gudmundsson.subscription.util.AElog;
 import com.gudmundsson.subscription.util.AEutil;
