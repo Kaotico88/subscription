@@ -29,37 +29,37 @@ public class ResponseInvoiceService {
 
 	@Autowired
 	private ItemServiceService itemServiceService;
-	
+
 	@Autowired
 	private InvoiceService invoiceService;
-	
+
 	@Autowired
 	private SubscriptionService subscriptionService;
 
-	public ResponseInvoiceDto getInvoiceDetails(Optional<Long> invoiceId, String sessionLogId)
+	public ResponseInvoiceDto getInvoiceDetailsA(Optional<Long> invoiceId, String sessionLogId)
 			throws RepositoryException {
 
 		ResponseInvoiceDto responseObject = new ResponseInvoiceDto();
 		responseObject.setData(new Data());
-		
+
 //		Empezamos a settear el invoice con los datos que se require
 		Invoice invoice = invoiceService.getInvoiceById(invoiceId);
 		InvoiceDto2 invoiceDto2 = new InvoiceDto2();
 		invoiceDto2.setBillingPeriod(invoice.getBillingPeriod());
 		invoiceDto2.setIssueDate(invoice.getIssueDate());
 		invoiceDto2.setSubscriptionId(invoice.getSubscription().getSubscriptionId());
-		
+
 //		Calcular el costo total de los servicios
 		List<Subscription> subscriptions = subscriptionService.getSubscriptionsByInvoiceId(invoiceId);
 		double totalCost = calculateTotalCost(subscriptions);
 		invoice.setTotalAmount(totalCost);
 		invoiceService.update(invoice);
-		
+
 		invoiceDto2.setTotalAmount(totalCost);
-		
+
 //		aca debo setear el monto total
 		responseObject.getData().setInvoice(invoiceDto2);
-		
+
 //		Este "customer" es un Dto por si caso....
 		CustomerDto customer = new CustomerDto();
 		customer.setName(customerService.getCustomerByInvoiceId(invoiceId).getName());
@@ -71,7 +71,7 @@ public class ResponseInvoiceService {
 		for (Company company : companies) {
 			List<ItemService> itemServicesxCompany = itemServiceService
 					.getItemServicesByCompanyId(Optional.of(company.getCompanyId()));
-			
+
 			List<ItemServiceDto> itemServiceDtos = new ArrayList<>();
 
 			for (ItemService itemService : itemServicesxCompany) {
@@ -84,19 +84,20 @@ public class ResponseInvoiceService {
 			}
 			company.setItemServiceDtos(itemServiceDtos);
 		}
-		
+
 		responseObject.getData().setCompanies(companies);
 
 		return responseObject;
 	}
-	
+
 	public Double calculateTotalCost(List<Subscription> subscriptions) {
-		
+
 		double totalCost = 0.0;
 
-		for(Subscription subscription : subscriptions) {			
-			if(subscription.getState()) {
-				ItemService item = itemServiceService.getItemServiceBySubscriptionId(Optional.of(subscription.getSubscriptionId()));
+		for (Subscription subscription : subscriptions) {
+			if (subscription.getState()) {
+				ItemService item = itemServiceService
+						.getItemServiceBySubscriptionId(Optional.of(subscription.getSubscriptionId()));
 				double costPerHour = item.getCostHour();
 				double hoursUsed = subscription.getHoursUsed();
 				totalCost += costPerHour * hoursUsed;
@@ -104,6 +105,58 @@ public class ResponseInvoiceService {
 		}
 		return totalCost;
 	}
-	
-	
+
+	public ResponseInvoiceDto getInvoiceDetailsB(Optional<Long> customerId, Optional<Long> companyId,
+			Optional<String> billingPeriod, String sessionLogId) throws RepositoryException {
+
+		ResponseInvoiceDto responseObject = new ResponseInvoiceDto();
+		responseObject.setData(new Data());
+
+		Invoice invoice = invoiceService.getInvoiceByCustomerIdCompanyIdBillingPeriod(customerId, companyId,
+				billingPeriod);
+		InvoiceDto2 invoiceDto2 = new InvoiceDto2();
+		invoiceDto2.setBillingPeriod(invoice.getBillingPeriod());
+		invoiceDto2.setIssueDate(invoice.getIssueDate());
+		invoiceDto2.setSubscriptionId(invoice.getSubscription().getSubscriptionId());
+
+		List<Subscription> subscriptions = subscriptionService
+				.getSubscriptionsByInvoiceId(Optional.of(invoice.getInvoiceId()));
+		double totalCost = calculateTotalCost(subscriptions);
+		invoice.setTotalAmount(totalCost);
+		invoiceService.update(invoice);
+
+		invoiceDto2.setTotalAmount(totalCost);
+
+		responseObject.getData().setInvoice(invoiceDto2);
+
+		CustomerDto customer = new CustomerDto();
+		customer.setName(customerService.getCustomerByInvoiceId(Optional.of(invoice.getInvoiceId())).getName());
+		customer.setEmail(customerService.getCustomerByInvoiceId(Optional.of(invoice.getInvoiceId())).getEmail());
+		responseObject.getData().setCustomer(customer);
+
+		List<Company> companies = companyService.getCompaniesByInvoiceId(Optional.of(invoice.getInvoiceId()));
+
+		for (Company company : companies) {
+			List<ItemService> itemServicesxCompany = itemServiceService
+					.getItemServicesByCompanyId(Optional.of(company.getCompanyId()));
+
+			List<ItemServiceDto> itemServiceDtos = new ArrayList<>();
+
+			for (ItemService itemService : itemServicesxCompany) {
+				ItemServiceDto itemServiceDto = new ItemServiceDto();
+				itemServiceDto.setName(itemService.getName());
+				itemServiceDto.setCostHour(itemService.getCostHour());
+				itemServiceDto.setDescription(itemService.getDescription());
+				itemServiceDto.setCompanyId(itemService.getCompany().getCompanyId());
+				itemServiceDtos.add(itemServiceDto);
+			}
+			company.setItemServiceDtos(itemServiceDtos);
+		}
+
+		responseObject.getData().setCompanies(companies);
+
+		return responseObject;
+
+	}
+
 }

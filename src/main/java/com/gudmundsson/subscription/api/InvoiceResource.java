@@ -62,7 +62,7 @@ public class InvoiceResource {
 			throw new CustomRuntimeException(HttpStatus.BAD_REQUEST, 400, "El parametro 'invoiceId' no es valido");
 		}
 
-		responseObj = responseInvoiceService.getInvoiceDetails(ofNullable(invoiceId), sessionLogId);
+		responseObj = responseInvoiceService.getInvoiceDetailsA(ofNullable(invoiceId), sessionLogId);
 
 		if (responseObj == null) {
 			throw new CustomRuntimeException(HttpStatus.BAD_REQUEST, 400, "No se encontraron datos para la busqueda");
