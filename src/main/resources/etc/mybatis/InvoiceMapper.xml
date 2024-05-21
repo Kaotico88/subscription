@@ -70,7 +70,29 @@
                AND inv_invoice_id = #{invoiceId}       
         </where>
     </select>
-    
+   <!-- Obtener un invoice a partir de customerId, companyId, y billingPeriod  -->
+    <select id="getInvoiceByCustomerIdCompanyIdBillingPeriod" resultMap="InvoiceResultMap">
+        <![CDATA[
+            SELECT i.*
+              FROM invoice i
+              JOIN subscription su ON i.inv_sub_subscription_id = su.sub_subscription_id
+              JOIN item_service it ON su.sub_ite_item_service_id = it.ite_item_service_id
+              JOIN aebytes.company co ON it.ite_com_company_id = co.com_company_id
+              JOIN customer cu ON su.sub_cus_customer_id = cu.cus_customer_id
+        ]]>
+        <where>
+			<if test="customerId != null">
+                cus_customer_id = #{customerId},
+            </if>
+            <if test="companyId != null">
+                com_company_id = #{companyId},
+            </if>
+			<if test="billingPeriod != null">
+                inv_invoice_id = #{billingPeriod},
+            </if>      
+        </where>
+    </select>
+     
     <update id="updateRecord">
         UPDATE invoice
         <set>

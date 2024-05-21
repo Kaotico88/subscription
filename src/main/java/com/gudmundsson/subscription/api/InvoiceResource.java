@@ -34,9 +34,6 @@ public class InvoiceResource {
 	
 	 @Autowired
 	 private ResponseInvoiceService responseInvoiceService;
-	 
-	 @Autowired 
-	 private InvoiceService invoiceService;
 	
 	@GetMapping("/status")
 	public ResponseEntity<Object> healthRequest(HttpServletRequest request) throws Exception {

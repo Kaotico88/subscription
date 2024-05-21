@@ -23,4 +23,9 @@ public class InvoiceService {
 		return repository.update(object);
 	}
 	
+	public Invoice getInvoiceByCustomerIdCompanyIdBillingPeriod(Optional<Long> customerId, Optional<Long> companyId,
+			Optional<String> billingPeriod)throws RepositoryException{
+		return repository.getInvoiceByCustomerIdCompanyIdBillingPeriod(customerId, companyId, billingPeriod);
+	}
+	
 }
