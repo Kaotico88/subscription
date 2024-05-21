@@ -7,7 +7,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import com.gudmundsson.subscription.core.Invoice;
-import com.gudmundsson.subscription.core.Subscription;
 import com.gudmundsson.subscription.util.exception.RepositoryException;
 
 @Repository

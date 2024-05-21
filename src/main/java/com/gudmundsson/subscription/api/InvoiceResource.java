@@ -30,10 +30,10 @@ public class InvoiceResource {
 
 	@Autowired
 	private AEutil util;
-	
-	 @Autowired
-	 private ResponseInvoiceService responseInvoiceService;
-	
+
+	@Autowired
+	private ResponseInvoiceService responseInvoiceService;
+
 	@GetMapping("/status")
 	public ResponseEntity<Object> healthRequest(HttpServletRequest request) throws Exception {
 
@@ -46,10 +46,9 @@ public class InvoiceResource {
 		responseHeaders.set("Custom-Message", "HTTP/1.1 200 OK");
 		return new ResponseEntity<Object>(object, responseHeaders, HttpStatus.OK);
 	}
-	
-	
+
 	@GetMapping("/{invoiceId}")
-	public ResponseEntity<ResponseInvoiceDto> getInvoice(@PathVariable("invoiceId") Long invoiceId,
+	public ResponseEntity<ResponseInvoiceDto> getInvoiceA(@PathVariable("invoiceId") Long invoiceId,
 			HttpServletRequest request) {
 
 		String sessionLogId = System.currentTimeMillis() + ": ";
@@ -71,9 +70,41 @@ public class InvoiceResource {
 		return new ResponseEntity<ResponseInvoiceDto>(responseObj, responseHeaders, HttpStatus.ACCEPTED);
 
 	}
-	
-	
-	
+
+	@GetMapping("/{customerId}/{companyId}/{billingPeriod}")
+	public ResponseEntity<ResponseInvoiceDto> getInvoiceB(@PathVariable("customerId") Long customerId,
+			@PathVariable("companyId") Long companyId, @PathVariable("billingPeriod") String billingPeriod,
+			HttpServletRequest request) {
+
+		String sessionLogId = System.currentTimeMillis() + ": ";
+		ResponseInvoiceDto responseObj = new ResponseInvoiceDto();// este es el objetito
+		HttpHeaders responseHeaders = new HttpHeaders();
+		requestLog(request, sessionLogId);
+
+		if (customerId == null) {
+			throw new CustomRuntimeException(HttpStatus.BAD_REQUEST, 400, "El parametro 'customerId' no es valido");
+		}
+
+		if (companyId == null) {
+			throw new CustomRuntimeException(HttpStatus.BAD_REQUEST, 400, "El parametro '(companyId' no es valido");
+		}
+
+		if (billingPeriod == null) {
+			throw new CustomRuntimeException(HttpStatus.BAD_REQUEST, 400, "El parametro 'billingPeriod' no es valido");
+		}
+
+		responseObj = responseInvoiceService.getInvoiceDetailsB(ofNullable(customerId), ofNullable(companyId), ofNullable(billingPeriod), sessionLogId);
+
+		if (responseObj == null || responseObj.getData().getCustomer() == null || responseObj.getData().getCompanies() == null ||
+				responseObj.getData().getInvoice().getBillingPeriod() == null) {
+			throw new CustomRuntimeException(HttpStatus.BAD_REQUEST, 400, "No se encontraron datos para la busqueda");
+		}
+
+		responseHeaders.set("Custom-Message", "HTTP/1.1 200 Ok");
+		return new ResponseEntity<ResponseInvoiceDto>(responseObj, responseHeaders, HttpStatus.ACCEPTED);
+
+	}
+
 	private synchronized void requestLog(HttpServletRequest request, String sessionLogId) {
 		AElog.infoX(logger,
 				sessionLogId + util.getInetAddressPort() + " <= " + request.getRemoteHost() + " {method:"

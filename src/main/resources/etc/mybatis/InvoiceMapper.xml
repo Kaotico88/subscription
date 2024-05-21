@@ -82,13 +82,13 @@
         ]]>
         <where>
 			<if test="customerId != null">
-                cus_customer_id = #{customerId},
+                AND cus_customer_id = #{customerId}
             </if>
             <if test="companyId != null">
-                com_company_id = #{companyId},
+                AND com_company_id = #{companyId}
             </if>
 			<if test="billingPeriod != null">
-                inv_invoice_id = #{billingPeriod},
+                AND inv_billing_period = #{billingPeriod}
             </if>      
         </where>
     </select>
