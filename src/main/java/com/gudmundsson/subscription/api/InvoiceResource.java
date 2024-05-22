@@ -2,6 +2,8 @@ package com.gudmundsson.subscription.api;
 
 import static java.util.Optional.ofNullable;
 
+import java.io.IOException;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,12 +17,19 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.gudmundsson.subscription.dto.HealthMessage;
 import com.gudmundsson.subscription.dto.ResponseInvoiceDto;
+//import com.gudmundsson.subscription.service.InvoiceService;
 import com.gudmundsson.subscription.service.ResponseInvoiceService;
 import com.gudmundsson.subscription.util.AElog;
 import com.gudmundsson.subscription.util.AEutil;
 import com.gudmundsson.subscription.util.exception.response.custom.CustomRuntimeException;
+import com.lowagie.text.DocumentException;
 
 import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
+
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
 @RestController
 @RequestMapping("/api/v1/invoices")
@@ -33,6 +42,9 @@ public class InvoiceResource {
 
 	@Autowired
 	private ResponseInvoiceService responseInvoiceService;
+
+//	@Autowired
+//	private InvoiceService invoiceService;
 
 	@GetMapping("/status")
 	public ResponseEntity<Object> healthRequest(HttpServletRequest request) throws Exception {
@@ -93,10 +105,12 @@ public class InvoiceResource {
 			throw new CustomRuntimeException(HttpStatus.BAD_REQUEST, 400, "El parametro 'billingPeriod' no es valido");
 		}
 
-		responseObj = responseInvoiceService.getInvoiceDetailsB(ofNullable(customerId), ofNullable(companyId), ofNullable(billingPeriod), sessionLogId);
+		responseObj = responseInvoiceService.getInvoiceDetailsB(ofNullable(customerId), ofNullable(companyId),
+				ofNullable(billingPeriod), sessionLogId);
 
-		if (responseObj == null || responseObj.getData().getCustomer() == null || responseObj.getData().getCompanies() == null ||
-				responseObj.getData().getInvoice().getBillingPeriod() == null) {
+		if (responseObj == null || responseObj.getData().getCustomer() == null
+				|| responseObj.getData().getCompanies() == null
+				|| responseObj.getData().getInvoice().getBillingPeriod() == null) {
 			throw new CustomRuntimeException(HttpStatus.BAD_REQUEST, 400, "No se encontraron datos para la busqueda");
 		}
 
@@ -104,6 +118,21 @@ public class InvoiceResource {
 		return new ResponseEntity<ResponseInvoiceDto>(responseObj, responseHeaders, HttpStatus.ACCEPTED);
 
 	}
+	
+	@GetMapping("/pdf/generate/{invoiceId}")
+	public void generatePDF(@PathVariable("invoiceId") Long invoiceId ,HttpServletResponse response) throws DocumentException, IOException {
+		response.setContentType("application/pdf");
+		DateFormat dateFormater = new SimpleDateFormat("yyyy-MM-dd:hh:mm");
+		String currenteDateTime = dateFormater.format(new Date());
+		
+		String headerKey = "Content-Disposition";
+		String headerValue = "attachement; filename=pdf_" + currenteDateTime + ".pdf";
+		response.setHeader(headerKey, headerValue);
+		
+		this.responseInvoiceService.export(ofNullable(invoiceId),response);
+		
+	}
+
 
 	private synchronized void requestLog(HttpServletRequest request, String sessionLogId) {
 		AElog.infoX(logger,

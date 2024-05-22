@@ -9,23 +9,24 @@ import com.gudmundsson.subscription.core.Invoice;
 import com.gudmundsson.subscription.dao.RInvoiceRepository;
 import com.gudmundsson.subscription.util.exception.RepositoryException;
 
+
 @Service
 public class InvoiceService {
 
 	@Autowired
 	private RInvoiceRepository repository;
-	
-	public Invoice getInvoiceById(Optional<Long> id) throws RepositoryException{
+
+	public Invoice getInvoiceById(Optional<Long> id) throws RepositoryException {
 		return repository.getInvoiceById(id);
 	}
-	
-	public Invoice update(Invoice object) throws RepositoryException{
+
+	public Invoice update(Invoice object) throws RepositoryException {
 		return repository.update(object);
 	}
-	
+
 	public Invoice getInvoiceByCustomerIdCompanyIdBillingPeriod(Optional<Long> customerId, Optional<Long> companyId,
-			Optional<String> billingPeriod)throws RepositoryException{
+			Optional<String> billingPeriod) throws RepositoryException {
 		return repository.getInvoiceByCustomerIdCompanyIdBillingPeriod(customerId, companyId, billingPeriod);
 	}
-	
+
 }
