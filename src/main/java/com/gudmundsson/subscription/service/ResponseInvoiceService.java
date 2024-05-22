@@ -272,22 +272,42 @@ public class ResponseInvoiceService {
 				
 			List<ItemServiceDto> itemServiceDtos = new ArrayList<>();
 
+			Paragraph paragraph19 = new Paragraph("Servicios de la compania:");
+			paragraph19.setAlignment(Paragraph.ALIGN_LEFT);
+			document.add(paragraph19);
+			
 			for (ItemService itemService : itemServicesxCompany) {
 				ItemServiceDto itemServiceDto = new ItemServiceDto();
-				itemServiceDto.setName(itemService.getName());
-				itemServiceDto.setCostHour(itemService.getCostHour());
-				itemServiceDto.setDescription(itemService.getDescription());
-				itemServiceDto.setCompanyId(itemService.getCompany().getCompanyId());
-				itemServiceDtos.add(itemServiceDto);
+				Paragraph paragraph20 = new Paragraph(itemService.getName());
+				paragraph20.setAlignment(Paragraph.ALIGN_LEFT);
+				document.add(paragraph20);
+				
+				Paragraph paragraph21 = new Paragraph("Costo x hora del servicio:");
+				paragraph21.setAlignment(Paragraph.ALIGN_LEFT);
+				document.add(paragraph21);
+				
+				Paragraph paragraph22 = new Paragraph(Double.toString(itemService.getCostHour()));
+				paragraph22.setAlignment(Paragraph.ALIGN_LEFT);
+				document.add(paragraph22);
+				
+				Paragraph paragraph23 = new Paragraph("Descripcion del Servicio:");
+				paragraph23.setAlignment(Paragraph.ALIGN_LEFT);
+				document.add(paragraph23);
+				
+				Paragraph paragraph24 = new Paragraph(itemService.getDescription());
+				paragraph24.setAlignment(Paragraph.ALIGN_LEFT);
+				document.add(paragraph24);
+				
+				
+//				itemServiceDto.setName(itemService.getName());
+//				itemServiceDto.setCostHour(itemService.getCostHour());
+//				itemServiceDto.setDescription(itemService.getDescription());
+//				itemServiceDto.setCompanyId(itemService.getCompany().getCompanyId());
+//				itemServiceDtos.add(itemServiceDto);
 			}
-			company.setItemServiceDtos(itemServiceDtos);
+//			
 			
 		}
-				
-					
-		
-
-			
 		
 		document.close();
 		
