@@ -231,14 +231,29 @@ public class ResponseInvoiceService {
 		Paragraph paragraph13 = new Paragraph("Cod. Compania: ");
 		paragraph13.setAlignment(Paragraph.ALIGN_LEFT);
 		
+		document.add(paragraph);
+		document.add(paragraph1);
+		document.add(paragraph2);
+		document.add(paragraph3);
+		document.add(paragraph4);
+		document.add(paragraph5);
+		document.add(paragraph6);
+		document.add(paragraph7);
+		document.add(paragraph8);
+		document.add(paragraph9);
+		document.add(paragraph10);
+		document.add(paragraph11);
+		document.add(paragraph12);
+		document.add(paragraph13);
+		
 		for (Company company : companies) {
-			List<ItemService> itemServicesxCompany = itemServiceService
-					.getItemServicesByCompanyId(Optional.of(company.getCompanyId()));
-			
 			Paragraph paragraph14 = new Paragraph(Long.toString(company.getCompanyId()));
 			paragraph14.setAlignment(Paragraph.ALIGN_LEFT);
 			document.add(paragraph14);
-
+			
+			List<ItemService> itemServicesxCompany = itemServiceService
+					.getItemServicesByCompanyId(Optional.of(company.getCompanyId()));
+				
 			List<ItemServiceDto> itemServiceDtos = new ArrayList<>();
 
 			for (ItemService itemService : itemServicesxCompany) {
@@ -254,21 +269,8 @@ public class ResponseInvoiceService {
 		}
 				
 					
-		document.add(paragraph);
-		document.add(paragraph1);
-		document.add(paragraph2);
-		document.add(paragraph3);
-		document.add(paragraph4);
-		document.add(paragraph5);
-		document.add(paragraph6);
-		document.add(paragraph7);
-		document.add(paragraph8);
-		document.add(paragraph9);
-		document.add(paragraph10);
-		document.add(paragraph11);
-		document.add(paragraph12);
-		document.add(paragraph13);
-//		document.add(paragraph14);
+		
+
 			
 		
 		document.close();
