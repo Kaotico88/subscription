@@ -251,6 +251,22 @@ public class ResponseInvoiceService {
 			paragraph14.setAlignment(Paragraph.ALIGN_LEFT);
 			document.add(paragraph14);
 			
+			Paragraph paragraph15 = new Paragraph("Nombre de la Compania:");
+			paragraph15.setAlignment(Paragraph.ALIGN_LEFT);
+			document.add(paragraph15);
+			
+			Paragraph paragraph16 = new Paragraph(company.getName());
+			paragraph16.setAlignment(Paragraph.ALIGN_LEFT);
+			document.add(paragraph16);
+			
+			Paragraph paragraph17 = new Paragraph("Direccion de la Compañina:");
+			paragraph17.setAlignment(Paragraph.ALIGN_LEFT);
+			document.add(paragraph17);
+			
+			Paragraph paragraph18 = new Paragraph(company.getAddress());
+			paragraph18.setAlignment(Paragraph.ALIGN_LEFT);
+			document.add(paragraph18);
+			
 			List<ItemService> itemServicesxCompany = itemServiceService
 					.getItemServicesByCompanyId(Optional.of(company.getCompanyId()));
 				
