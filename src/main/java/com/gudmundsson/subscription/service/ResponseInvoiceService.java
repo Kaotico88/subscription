@@ -1,5 +1,6 @@
 package com.gudmundsson.subscription.service;
 
+import java.io.File;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -31,6 +32,9 @@ import jakarta.servlet.http.HttpServletResponse;
 
 @Service
 public class ResponseInvoiceService {
+	
+	//Para la generacion y almacenamiento del PDF
+	private static final String PDF_DIRECTORY = "C:\\Users\\Usuario\\Downloads\\";
 
 	@Autowired
 	private CustomerService customerService;
@@ -169,68 +173,68 @@ public class ResponseInvoiceService {
 		return responseObject;
 
 	}
-	
-	public void export(Optional<Long> invoiceId, HttpServletResponse response) throws DocumentException, IOException {
+
+	public void exportA(Optional<Long> invoiceId, HttpServletResponse response) throws DocumentException, IOException {
 		Document document = new Document(PageSize.A4);
 		PdfWriter.getInstance(document, response.getOutputStream());
-		
+
 		ResponseInvoiceDto responseA = getInvoiceDetailsA(invoiceId, null);
-		
+
 		SimpleDateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy HH:mm:ss");
 		String dateString = dateFormat.format(responseA.getData().getInvoice().getIssueDate());
-		
+
 		long subscriptionId = responseA.getData().getInvoice().getSubscriptionId();
 		String myStringSubscription = Long.toString(subscriptionId);
-		
+
 		Double total = responseA.getData().getInvoice().getTotalAmount();
 		String totalAmount = Double.toString(total);
-		
+
 		List<Company> companies = responseA.getData().getCompanies();
-		
-		document.open();		
+
+		document.open();
 //		Conf del titulo
 		Font fontTitle = FontFactory.getFont(FontFactory.HELVETICA_BOLD);
 		fontTitle.setSize(18);
-		
+
 		Paragraph paragraph = new Paragraph("Factura");
 		paragraph.setAlignment(Paragraph.ALIGN_CENTER);
-		
+
 		Font fontParagraph = FontFactory.getFont(FontFactory.HELVETICA);
 		fontParagraph.setSize(12);
-		
+
 		Paragraph paragraph1 = new Paragraph("Perido de Facturacion: ");
 		paragraph1.setAlignment(Paragraph.ALIGN_LEFT);
 		Paragraph paragraph2 = new Paragraph(responseA.getData().getInvoice().getBillingPeriod());
 		paragraph2.setAlignment(Paragraph.ALIGN_LEFT);
-		
+
 		Paragraph paragraph3 = new Paragraph("Fecha de Emision: ");
 		paragraph3.setAlignment(Paragraph.ALIGN_LEFT);
 		Paragraph paragraph4 = new Paragraph(dateString);
 		paragraph4.setAlignment(Paragraph.ALIGN_LEFT);
-		
+
 		Paragraph paragraph5 = new Paragraph("N° de Suscripcion: ");
 		paragraph5.setAlignment(Paragraph.ALIGN_LEFT);
 		Paragraph paragraph6 = new Paragraph(myStringSubscription);
 		paragraph6.setAlignment(Paragraph.ALIGN_LEFT);
-		
+
 		Paragraph paragraph7 = new Paragraph("TOTAL : ");
 		paragraph5.setAlignment(Paragraph.ALIGN_LEFT);
 		Paragraph paragraph8 = new Paragraph(totalAmount);
 		paragraph6.setAlignment(Paragraph.ALIGN_LEFT);
-		
+
 		Paragraph paragraph9 = new Paragraph("Cliente: ");
 		paragraph9.setAlignment(Paragraph.ALIGN_LEFT);
 		Paragraph paragraph10 = new Paragraph(responseA.getData().getCustomer().getName());
 		paragraph10.setAlignment(Paragraph.ALIGN_LEFT);
-		
+
 		Paragraph paragraph11 = new Paragraph("Email: ");
 		paragraph11.setAlignment(Paragraph.ALIGN_LEFT);
 		Paragraph paragraph12 = new Paragraph(responseA.getData().getCustomer().getEmail());
 		paragraph12.setAlignment(Paragraph.ALIGN_LEFT);
-		
+
 		Paragraph paragraph13 = new Paragraph("Cod. Compania: ");
 		paragraph13.setAlignment(Paragraph.ALIGN_LEFT);
-		
+
 		document.add(paragraph);
 		document.add(paragraph1);
 		document.add(paragraph2);
@@ -245,72 +249,198 @@ public class ResponseInvoiceService {
 		document.add(paragraph11);
 		document.add(paragraph12);
 		document.add(paragraph13);
-		
+
 		for (Company company : companies) {
 			Paragraph paragraph14 = new Paragraph(Long.toString(company.getCompanyId()));
 			paragraph14.setAlignment(Paragraph.ALIGN_LEFT);
 			document.add(paragraph14);
-			
+
 			Paragraph paragraph15 = new Paragraph("Nombre de la Compania:");
 			paragraph15.setAlignment(Paragraph.ALIGN_LEFT);
 			document.add(paragraph15);
-			
+
 			Paragraph paragraph16 = new Paragraph(company.getName());
 			paragraph16.setAlignment(Paragraph.ALIGN_LEFT);
 			document.add(paragraph16);
-			
+
 			Paragraph paragraph17 = new Paragraph("Direccion de la Compañina:");
 			paragraph17.setAlignment(Paragraph.ALIGN_LEFT);
 			document.add(paragraph17);
-			
+
 			Paragraph paragraph18 = new Paragraph(company.getAddress());
 			paragraph18.setAlignment(Paragraph.ALIGN_LEFT);
 			document.add(paragraph18);
-			
+
 			List<ItemService> itemServicesxCompany = itemServiceService
 					.getItemServicesByCompanyId(Optional.of(company.getCompanyId()));
-				
-			List<ItemServiceDto> itemServiceDtos = new ArrayList<>();
 
 			Paragraph paragraph19 = new Paragraph("Servicios de la compania:");
 			paragraph19.setAlignment(Paragraph.ALIGN_LEFT);
 			document.add(paragraph19);
-			
+
 			for (ItemService itemService : itemServicesxCompany) {
-				ItemServiceDto itemServiceDto = new ItemServiceDto();
 				Paragraph paragraph20 = new Paragraph(itemService.getName());
 				paragraph20.setAlignment(Paragraph.ALIGN_LEFT);
 				document.add(paragraph20);
-				
+
 				Paragraph paragraph21 = new Paragraph("Costo x hora del servicio:");
 				paragraph21.setAlignment(Paragraph.ALIGN_LEFT);
 				document.add(paragraph21);
-				
+
 				Paragraph paragraph22 = new Paragraph(Double.toString(itemService.getCostHour()));
 				paragraph22.setAlignment(Paragraph.ALIGN_LEFT);
 				document.add(paragraph22);
-				
+
 				Paragraph paragraph23 = new Paragraph("Descripcion del Servicio:");
 				paragraph23.setAlignment(Paragraph.ALIGN_LEFT);
 				document.add(paragraph23);
-				
+
 				Paragraph paragraph24 = new Paragraph(itemService.getDescription());
 				paragraph24.setAlignment(Paragraph.ALIGN_LEFT);
 				document.add(paragraph24);
-				
-				
-//				itemServiceDto.setName(itemService.getName());
-//				itemServiceDto.setCostHour(itemService.getCostHour());
-//				itemServiceDto.setDescription(itemService.getDescription());
-//				itemServiceDto.setCompanyId(itemService.getCompany().getCompanyId());
-//				itemServiceDtos.add(itemServiceDto);
 			}
-//			
-			
+
 		}
-		
+
 		document.close();
-		
+	}
+	
+//	Aca empieza el generar y almacenar un PDF
+	public boolean pdfExists(Long customerId, Long companyId, String billingPeriod) {
+		File file = new File(PDF_DIRECTORY + customerId + companyId + billingPeriod + ".pdf");
+		return file.exists();
+	}
+	
+	public void exportB(Optional<Long> invoiceId, HttpServletResponse response) throws DocumentException, IOException {
+		Document document = new Document(PageSize.A4);
+		PdfWriter.getInstance(document, response.getOutputStream());
+
+		ResponseInvoiceDto responseA = getInvoiceDetailsA(invoiceId, null);
+
+		SimpleDateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy HH:mm:ss");
+		String dateString = dateFormat.format(responseA.getData().getInvoice().getIssueDate());
+
+		long subscriptionId = responseA.getData().getInvoice().getSubscriptionId();
+		String myStringSubscription = Long.toString(subscriptionId);
+
+		Double total = responseA.getData().getInvoice().getTotalAmount();
+		String totalAmount = Double.toString(total);
+
+		List<Company> companies = responseA.getData().getCompanies();
+
+		document.open();
+//		Conf del titulo
+		Font fontTitle = FontFactory.getFont(FontFactory.HELVETICA_BOLD);
+		fontTitle.setSize(18);
+
+		Paragraph paragraph = new Paragraph("Factura");
+		paragraph.setAlignment(Paragraph.ALIGN_CENTER);
+
+		Font fontParagraph = FontFactory.getFont(FontFactory.HELVETICA);
+		fontParagraph.setSize(12);
+
+		Paragraph paragraph1 = new Paragraph("Perido de Facturacion: ");
+		paragraph1.setAlignment(Paragraph.ALIGN_LEFT);
+		Paragraph paragraph2 = new Paragraph(responseA.getData().getInvoice().getBillingPeriod());
+		paragraph2.setAlignment(Paragraph.ALIGN_LEFT);
+
+		Paragraph paragraph3 = new Paragraph("Fecha de Emision: ");
+		paragraph3.setAlignment(Paragraph.ALIGN_LEFT);
+		Paragraph paragraph4 = new Paragraph(dateString);
+		paragraph4.setAlignment(Paragraph.ALIGN_LEFT);
+
+		Paragraph paragraph5 = new Paragraph("N° de Suscripcion: ");
+		paragraph5.setAlignment(Paragraph.ALIGN_LEFT);
+		Paragraph paragraph6 = new Paragraph(myStringSubscription);
+		paragraph6.setAlignment(Paragraph.ALIGN_LEFT);
+
+		Paragraph paragraph7 = new Paragraph("TOTAL : ");
+		paragraph5.setAlignment(Paragraph.ALIGN_LEFT);
+		Paragraph paragraph8 = new Paragraph(totalAmount);
+		paragraph6.setAlignment(Paragraph.ALIGN_LEFT);
+
+		Paragraph paragraph9 = new Paragraph("Cliente: ");
+		paragraph9.setAlignment(Paragraph.ALIGN_LEFT);
+		Paragraph paragraph10 = new Paragraph(responseA.getData().getCustomer().getName());
+		paragraph10.setAlignment(Paragraph.ALIGN_LEFT);
+
+		Paragraph paragraph11 = new Paragraph("Email: ");
+		paragraph11.setAlignment(Paragraph.ALIGN_LEFT);
+		Paragraph paragraph12 = new Paragraph(responseA.getData().getCustomer().getEmail());
+		paragraph12.setAlignment(Paragraph.ALIGN_LEFT);
+
+		Paragraph paragraph13 = new Paragraph("Cod. Compania: ");
+		paragraph13.setAlignment(Paragraph.ALIGN_LEFT);
+
+		document.add(paragraph);
+		document.add(paragraph1);
+		document.add(paragraph2);
+		document.add(paragraph3);
+		document.add(paragraph4);
+		document.add(paragraph5);
+		document.add(paragraph6);
+		document.add(paragraph7);
+		document.add(paragraph8);
+		document.add(paragraph9);
+		document.add(paragraph10);
+		document.add(paragraph11);
+		document.add(paragraph12);
+		document.add(paragraph13);
+
+		for (Company company : companies) {
+			Paragraph paragraph14 = new Paragraph(Long.toString(company.getCompanyId()));
+			paragraph14.setAlignment(Paragraph.ALIGN_LEFT);
+			document.add(paragraph14);
+
+			Paragraph paragraph15 = new Paragraph("Nombre de la Compania:");
+			paragraph15.setAlignment(Paragraph.ALIGN_LEFT);
+			document.add(paragraph15);
+
+			Paragraph paragraph16 = new Paragraph(company.getName());
+			paragraph16.setAlignment(Paragraph.ALIGN_LEFT);
+			document.add(paragraph16);
+
+			Paragraph paragraph17 = new Paragraph("Direccion de la Compañina:");
+			paragraph17.setAlignment(Paragraph.ALIGN_LEFT);
+			document.add(paragraph17);
+
+			Paragraph paragraph18 = new Paragraph(company.getAddress());
+			paragraph18.setAlignment(Paragraph.ALIGN_LEFT);
+			document.add(paragraph18);
+
+			List<ItemService> itemServicesxCompany = itemServiceService
+					.getItemServicesByCompanyId(Optional.of(company.getCompanyId()));
+
+			Paragraph paragraph19 = new Paragraph("Servicios de la compania:");
+			paragraph19.setAlignment(Paragraph.ALIGN_LEFT);
+			document.add(paragraph19);
+
+			for (ItemService itemService : itemServicesxCompany) {
+				Paragraph paragraph20 = new Paragraph(itemService.getName());
+				paragraph20.setAlignment(Paragraph.ALIGN_LEFT);
+				document.add(paragraph20);
+
+				Paragraph paragraph21 = new Paragraph("Costo x hora del servicio:");
+				paragraph21.setAlignment(Paragraph.ALIGN_LEFT);
+				document.add(paragraph21);
+
+				Paragraph paragraph22 = new Paragraph(Double.toString(itemService.getCostHour()));
+				paragraph22.setAlignment(Paragraph.ALIGN_LEFT);
+				document.add(paragraph22);
+
+				Paragraph paragraph23 = new Paragraph("Descripcion del Servicio:");
+				paragraph23.setAlignment(Paragraph.ALIGN_LEFT);
+				document.add(paragraph23);
+
+				Paragraph paragraph24 = new Paragraph(itemService.getDescription());
+				paragraph24.setAlignment(Paragraph.ALIGN_LEFT);
+				document.add(paragraph24);
+			}
+
+		}
+
+		document.close();
+
 	}
 
 }

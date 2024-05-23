@@ -129,7 +129,7 @@ public class InvoiceResource {
 		String headerValue = "attachement; filename=pdf_" + currenteDateTime + ".pdf";
 		response.setHeader(headerKey, headerValue);
 		
-		this.responseInvoiceService.export(ofNullable(invoiceId),response);
+		this.responseInvoiceService.exportA(ofNullable(invoiceId),response);
 		
 	}
 
