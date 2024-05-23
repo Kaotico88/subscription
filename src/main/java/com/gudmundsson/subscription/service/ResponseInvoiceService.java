@@ -1,6 +1,7 @@
 package com.gudmundsson.subscription.service;
 
 import java.io.File;
+import java.io.FileOutputStream;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -8,6 +9,7 @@ import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
 
 import com.gudmundsson.subscription.core.Company;
@@ -311,9 +313,21 @@ public class ResponseInvoiceService {
 		return file.exists();
 	}
 	
-	public void exportB(Optional<Long> invoiceId, HttpServletResponse response) throws DocumentException, IOException {
+	@Async
+	public void exportB(Optional<Long> customerId, Optional<Long> companyId, Optional<String> billingPeriod, HttpServletResponse response) 
+			throws DocumentException, IOException {
+		
 		Document document = new Document(PageSize.A4);
 		PdfWriter.getInstance(document, response.getOutputStream());
+//		***
+		File file = new File(PDF_DIRECTORY + customerId + companyId + billingPeriod + ".pdf");
+		PdfWriter.getInstance(document, new FileOutputStream(file));	
+		
+//		***
+		Invoice invoice = invoiceService.getInvoiceByCustomerIdCompanyIdBillingPeriod(customerId, companyId,
+				billingPeriod);
+//		***
+		Optional<Long> invoiceId = Optional.of(invoice.getInvoiceId());
 
 		ResponseInvoiceDto responseA = getInvoiceDetailsA(invoiceId, null);
 
@@ -442,5 +456,10 @@ public class ResponseInvoiceService {
 		document.close();
 
 	}
+	
+	public byte[] getPDF(Long customerId, Long companyId, String billingPeriod) throws IOException {
+		File file = new File(PDF_DIRECTORY + customerId + companyId + billingPeriod + ".pdf");
+        return java.nio.file.Files.readAllBytes(file.toPath());
+    }
 
 }
