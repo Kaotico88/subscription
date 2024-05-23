@@ -139,7 +139,8 @@ public class InvoiceResource {
 	
 //	*** Aca me quede me falta la @GetMapping("/downloadPDF") del chatGPT de google
 	@PostMapping("/convertToPDF")
-    public ResponseEntity<String> convertToPDF(@RequestParam Long customerId, @RequestParam Long companyId, @RequestParam String billingPeriod,
+    public ResponseEntity<String> convertToPDF(@RequestParam(name = "customerId") Long customerId, 
+    		@RequestParam(name = "companyId") Long companyId, @RequestParam(name = "billingPeriod") String billingPeriod,
     		HttpServletResponse response) throws DocumentException, IOException {
         if (responseInvoiceService.pdfExists(customerId, customerId, billingPeriod)) {
             byte[] pdfBytes = responseInvoiceService.getPDF(customerId, customerId, billingPeriod);
@@ -153,6 +154,7 @@ public class InvoiceResource {
         }
     }
 
+	
 
 	private synchronized void requestLog(HttpServletRequest request, String sessionLogId) {
 		AElog.infoX(logger,
