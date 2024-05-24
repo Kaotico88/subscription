@@ -55,6 +55,17 @@
                AND inv_sub_subscription_id = #{subscriptionId}
         </where>
     </select>
+    
+    <!-- *** Este query obtiene un invoices a partir de billingPeriod -->
+    <select id="getInvoicesByBillingPeriod" resultMap="InvoiceResultMap">
+        <![CDATA[
+            SELECT *
+              FROM invoice
+        ]]>
+        <where>
+               AND inv_billing_period = #{billingPeriod}
+        </where>
+    </select>
      
     <!-- Obtener el invoices agrupando servicios por compañia -->
      <select id="getInvoicesByCompanyId" resultMap="InvoiceResultMap">

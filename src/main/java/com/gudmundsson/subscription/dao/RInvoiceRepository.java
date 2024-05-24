@@ -39,6 +39,10 @@ public class RInvoiceRepository {
 		return mapper.getInvoicesByCompanyId(id.orElse(null));
 	}
 	
+	public List<Invoice> getInvoicesByBillingPeriod(Optional<String> billingPeriod) throws RepositoryException{
+		return mapper.getInvoicesByBillingPeriod(billingPeriod.orElse(null));
+	}
+	
 	public Invoice getInvoiceByCustomerIdCompanyIdBillingPeriod(Optional<Long> customerId, Optional<Long> companyId,
 								Optional<String> billingPeriod) throws RepositoryException{
 		return mapper.getInvoiceByCustomerIdCompanyIdBillingPeriod(customerId.orElse(null), 

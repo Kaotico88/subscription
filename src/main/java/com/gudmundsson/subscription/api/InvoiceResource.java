@@ -14,7 +14,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
@@ -137,25 +136,25 @@ public class InvoiceResource {
 		
 	}
 	
-//	*** Aca me quede me falta la @GetMapping("/downloadPDF") del chatGPT de google
+//	***Requerimiento final
 	@PostMapping("/convertToPDF")
     public ResponseEntity<String> convertToPDF(@RequestParam(name = "customerId") Long customerId, 
     		@RequestParam(name = "companyId") Long companyId, @RequestParam(name = "billingPeriod") String billingPeriod,
     		HttpServletResponse response) throws DocumentException, IOException {
-        if (responseInvoiceService.pdfExists(customerId, customerId, billingPeriod)) {
-            byte[] pdfBytes = responseInvoiceService.getPDF(customerId, customerId, billingPeriod);
+		
+        if (responseInvoiceService.pdfExists(customerId, companyId, billingPeriod)) {
+            byte[] pdfBytes = responseInvoiceService.getPDF(customerId, companyId, billingPeriod);
             HttpHeaders headers = new HttpHeaders();
             headers.setContentType(MediaType.APPLICATION_PDF);
             headers.setContentDispositionFormData("filename", customerId + companyId + billingPeriod +".pdf");
-            return new ResponseEntity<>(new String(pdfBytes), headers, HttpStatus.OK);
+            return new ResponseEntity<String>(new String(pdfBytes), headers, HttpStatus.OK);
         } else {
-        	responseInvoiceService.exportB(ofNullable(customerId), ofNullable(companyId), ofNullable(billingPeriod), response);
-            return new ResponseEntity<>("Generating invoice, please try again later.", HttpStatus.ACCEPTED);
+        	responseInvoiceService.exportB(customerId, companyId, billingPeriod, response);
+            return new ResponseEntity<String>("Generating invoice, please try again later.", HttpStatus.ACCEPTED);
         }
     }
 
 	
-
 	private synchronized void requestLog(HttpServletRequest request, String sessionLogId) {
 		AElog.infoX(logger,
 				sessionLogId + util.getInetAddressPort() + " <= " + request.getRemoteHost() + " {method:"

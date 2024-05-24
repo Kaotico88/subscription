@@ -100,6 +100,7 @@ public class SubscriptionResource {
 		subscriptionDto.setCustomerId(customerId);
 		subscriptionDto.setItemServiceId(itemServiceId);
 		subscriptionDto.copyToCore(responseObj);
+		
 		responseObj = subscriptionService.save(responseObj);
 		
 		if(responseObj == null || responseObj.getSubscriptionId() == null || responseObj.getCustomer().getCustomerId() == null

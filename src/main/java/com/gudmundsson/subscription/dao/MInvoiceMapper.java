@@ -21,6 +21,8 @@ public interface MInvoiceMapper {
 	
 	public List<Invoice> getInvoicesByCompanyId(@Param("invoiceId") Long invoiceId) throws RepositoryException;
 	
+	public List<Invoice> getInvoicesByBillingPeriod(@Param("billingPeriod") String billingPeriod) throws RepositoryException;
+	
 	public Invoice getInvoiceByCustomerIdCompanyIdBillingPeriod(@Param("customerId") Long customerId,
 					@Param("companyId") Long companyId , @Param("billingPeriod") String billingPeriod)
 							throws RepositoryException;

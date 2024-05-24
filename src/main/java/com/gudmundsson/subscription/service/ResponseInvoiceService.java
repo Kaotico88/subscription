@@ -314,7 +314,7 @@ public class ResponseInvoiceService {
 	}
 	
 	@Async
-	public void exportB(Optional<Long> customerId, Optional<Long> companyId, Optional<String> billingPeriod, HttpServletResponse response) 
+	public void exportB(Long customerId, Long companyId, String billingPeriod, HttpServletResponse response) 
 			throws DocumentException, IOException {
 		
 		Document document = new Document(PageSize.A4);
@@ -324,8 +324,8 @@ public class ResponseInvoiceService {
 		PdfWriter.getInstance(document, new FileOutputStream(file));	
 		
 //		***
-		Invoice invoice = invoiceService.getInvoiceByCustomerIdCompanyIdBillingPeriod(customerId, companyId,
-				billingPeriod);
+		Invoice invoice = invoiceService.getInvoiceByCustomerIdCompanyIdBillingPeriod(Optional.of(customerId), Optional.of(companyId),
+				Optional.of(billingPeriod));
 //		***
 		Optional<Long> invoiceId = Optional.of(invoice.getInvoiceId());
 

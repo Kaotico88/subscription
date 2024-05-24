@@ -1,5 +1,6 @@
 package com.gudmundsson.subscription.service;
 
+import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,6 +23,10 @@ public class InvoiceService {
 
 	public Invoice update(Invoice object) throws RepositoryException {
 		return repository.update(object);
+	}
+	
+	public List<Invoice> getInvoicesByBillingPeriod(Optional<String> billingPeriod) throws RepositoryException{
+		return repository.getInvoicesByBillingPeriod(billingPeriod);
 	}
 
 	public Invoice getInvoiceByCustomerIdCompanyIdBillingPeriod(Optional<Long> customerId, Optional<Long> companyId,
