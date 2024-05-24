@@ -27,13 +27,13 @@ import jakarta.servlet.http.HttpServletRequest;
 public class CompanyResource {
 
 	private static final Logger logger = LoggerFactory.getLogger(CompanyResource.class);
-	
+
 	@Autowired
 	private AEutil util;
-	
+
 	@Autowired
 	private CompanyService companyService;
-	
+
 	@GetMapping("/status")
 	public ResponseEntity<HealthMessage> healthRequest(HttpServletRequest request) throws Exception {
 
@@ -41,35 +41,34 @@ public class CompanyResource {
 		HttpHeaders responseHeaders = new HttpHeaders();
 		requestLog(request, "X: ");
 
-		message = new HealthMessage("Service is operating normally!!");
+		message = new HealthMessage("Service is operating normally at company!!");
 
 		responseHeaders.set("Custom-Message", "HTTP/1.1 200 OK");
 		return new ResponseEntity<HealthMessage>(message, responseHeaders, HttpStatus.OK);
 	}
-	
+
 	@PostMapping
-	public ResponseEntity<Company> save(@RequestBody CompanyDto companyDto, HttpServletRequest request){
+	public ResponseEntity<Company> save(@RequestBody CompanyDto companyDto, HttpServletRequest request) {
 		String sessionLogId = System.currentTimeMillis() + ": ";
 		Company responseObj = new Company();// este es el objetito
 		HttpHeaders responseHeaders = new HttpHeaders();
 		requestLog(request, sessionLogId);
-		
-		if(companyDto == null) {
+
+		if (companyDto == null) {
 			throw new CustomRuntimeException(HttpStatus.BAD_REQUEST, 400, "El objeto que se desea registrar es nulo.");
 		}
-		
+
 		companyDto.copyToCore(responseObj);
 		responseObj = companyService.save(responseObj);
-		
-		if(responseObj == null || responseObj.getCompanyId() == null) {
+
+		if (responseObj == null || responseObj.getCompanyId() == null) {
 			throw new CustomRuntimeException(HttpStatus.CONFLICT, "La compania no se pudo registrar.");
 		}
-		
+
 		responseHeaders.set("Custom-Message", "HTTP/1.1 201 CREATED");
-        return new ResponseEntity<Company>(responseObj, responseHeaders, HttpStatus.CREATED);
+		return new ResponseEntity<Company>(responseObj, responseHeaders, HttpStatus.CREATED);
 	}
-	
-	
+
 	private synchronized void requestLog(HttpServletRequest request, String sessionLogId) {
 		AElog.infoX(logger,
 				sessionLogId + util.getInetAddressPort() + " <= " + request.getRemoteHost() + " {method:"

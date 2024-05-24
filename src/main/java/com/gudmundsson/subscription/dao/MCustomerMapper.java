@@ -10,10 +10,10 @@ import com.gudmundsson.subscription.util.exception.RepositoryException;
 public interface MCustomerMapper {
 
 	public Customer getCustomerById(@Param("recordId") Long recordId) throws RepositoryException;
-	
+
 	public void saveRecord(@Param("customer") Customer customer) throws RepositoryException;
-	
+
 	public Customer getCustomerByInvoiceId(@Param("invoiceId") Long invoiceId) throws RepositoryException;
-	
+
 	public Long getNextVal();
 }

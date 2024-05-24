@@ -7,15 +7,14 @@ import com.gudmundsson.subscription.core.Company;
 import com.gudmundsson.subscription.dto.CustomerDto;
 import com.gudmundsson.subscription.dto.InvoiceDto2;
 
-
 public class Data {
 
 	private InvoiceDto2 invoice;
-	
+
 	private CustomerDto customer;
-	
+
 	private List<Company> companies;
-	
+
 	public Data() {
 		this.companies = new ArrayList<>();
 	}
@@ -43,5 +42,5 @@ public class Data {
 	public void setCompanies(List<Company> companies) {
 		this.companies = companies;
 	}
-	
+
 }

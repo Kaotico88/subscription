@@ -20,7 +20,6 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.gudmundsson.subscription.dto.HealthMessage;
 import com.gudmundsson.subscription.dto.ResponseInvoiceDto;
-//import com.gudmundsson.subscription.service.InvoiceService;
 import com.gudmundsson.subscription.service.ResponseInvoiceService;
 import com.gudmundsson.subscription.util.AElog;
 import com.gudmundsson.subscription.util.AEutil;
@@ -46,9 +45,6 @@ public class InvoiceResource {
 	@Autowired
 	private ResponseInvoiceService responseInvoiceService;
 
-//	@Autowired
-//	private InvoiceService invoiceService;
-
 	@GetMapping("/status")
 	public ResponseEntity<Object> healthRequest(HttpServletRequest request) throws Exception {
 
@@ -56,12 +52,13 @@ public class InvoiceResource {
 		HttpHeaders responseHeaders = new HttpHeaders();
 		requestLog(request, "X: ");
 
-		object = new HealthMessage("Service is operating normally in Invoice!!");
+		object = new HealthMessage("Service is operating normally at invoice!!");
 
 		responseHeaders.set("Custom-Message", "HTTP/1.1 200 OK");
 		return new ResponseEntity<Object>(object, responseHeaders, HttpStatus.OK);
 	}
 
+//Obtiene un invoice por un invoiceId
 	@GetMapping("/{invoiceId}")
 	public ResponseEntity<ResponseInvoiceDto> getInvoiceA(@PathVariable("invoiceId") Long invoiceId,
 			HttpServletRequest request) {
@@ -86,6 +83,7 @@ public class InvoiceResource {
 
 	}
 
+//	Obtiene un invoice partir de un customId, companyId & billingPeriod
 	@GetMapping("/{customerId}/{companyId}/{billingPeriod}")
 	public ResponseEntity<ResponseInvoiceDto> getInvoiceB(@PathVariable("customerId") Long customerId,
 			@PathVariable("companyId") Long companyId, @PathVariable("billingPeriod") String billingPeriod,
@@ -101,7 +99,7 @@ public class InvoiceResource {
 		}
 
 		if (companyId == null) {
-			throw new CustomRuntimeException(HttpStatus.BAD_REQUEST, 400, "El parametro '(companyId' no es valido");
+			throw new CustomRuntimeException(HttpStatus.BAD_REQUEST, 400, "El parametro 'companyId' no es valido");
 		}
 
 		if (billingPeriod == null) {
@@ -121,46 +119,47 @@ public class InvoiceResource {
 		return new ResponseEntity<ResponseInvoiceDto>(responseObj, responseHeaders, HttpStatus.ACCEPTED);
 
 	}
-	
+
+//Obtiene y genera un PDF invoice a partir de un invoiceId
 	@GetMapping("/pdf/generate/{invoiceId}")
-	public void generatePDF(@PathVariable("invoiceId") Long invoiceId ,HttpServletResponse response) throws DocumentException, IOException {
+	public void generatePDF(@PathVariable("invoiceId") Long invoiceId, HttpServletResponse response)
+			throws DocumentException, IOException {
+
 		response.setContentType("application/pdf");
 		DateFormat dateFormater = new SimpleDateFormat("yyyy-MM-dd:hh:mm");
 		String currenteDateTime = dateFormater.format(new Date());
-		
 		String headerKey = "Content-Disposition";
 		String headerValue = "attachement; filename=pdf_" + currenteDateTime + ".pdf";
 		response.setHeader(headerKey, headerValue);
-		
-		this.responseInvoiceService.exportA(ofNullable(invoiceId),response);
-		
-	}
-	
-//	***Requerimiento final
-	@PostMapping("/convertToPDF")
-    public ResponseEntity<String> convertToPDF(@RequestParam(name = "customerId") Long customerId, 
-    		@RequestParam(name = "companyId") Long companyId, @RequestParam(name = "billingPeriod") String billingPeriod,
-    		HttpServletResponse response) throws DocumentException, IOException {
-		
-        if (responseInvoiceService.pdfExists(customerId, companyId, billingPeriod)) {
-            byte[] pdfBytes = responseInvoiceService.getPDF(customerId, companyId, billingPeriod);
-            HttpHeaders headers = new HttpHeaders();
-            headers.setContentType(MediaType.APPLICATION_PDF);
-            headers.setContentDispositionFormData("filename", customerId + companyId + billingPeriod +".pdf");
-            return new ResponseEntity<String>(new String(pdfBytes), headers, HttpStatus.OK);
-        } else {
-        	responseInvoiceService.exportB(customerId, companyId, billingPeriod, response);
-            return new ResponseEntity<String>("Generating invoice, please try again later.", HttpStatus.ACCEPTED);
-        }
-    }
 
-	
+		this.responseInvoiceService.exportA(ofNullable(invoiceId), response);
+
+	}
+
+//Obtiene y genera y guarda en le disco un invoice a partir de un customId, companyId y un billingPeriod
+	@PostMapping("/convertToPDF")
+	public ResponseEntity<String> convertToPDF(@RequestParam(name = "customerId") Long customerId,
+			@RequestParam(name = "companyId") Long companyId,
+			@RequestParam(name = "billingPeriod") String billingPeriod, HttpServletResponse response)
+			throws DocumentException, IOException {
+
+		if (responseInvoiceService.pdfExists(customerId, companyId, billingPeriod)) {
+			byte[] pdfBytes = responseInvoiceService.getPDF(customerId, companyId, billingPeriod);
+			HttpHeaders headers = new HttpHeaders();
+			headers.setContentType(MediaType.APPLICATION_PDF);
+			headers.setContentDispositionFormData("filename", customerId + companyId + billingPeriod + ".pdf");
+			return new ResponseEntity<String>(new String(pdfBytes), headers, HttpStatus.OK);
+		} else {
+			responseInvoiceService.exportB(customerId, companyId, billingPeriod, response);
+			return new ResponseEntity<String>("Factura Generada, Porfavor intente mas tarde.", HttpStatus.ACCEPTED);
+		}
+	}
+
 	private synchronized void requestLog(HttpServletRequest request, String sessionLogId) {
 		AElog.infoX(logger,
 				sessionLogId + util.getInetAddressPort() + " <= " + request.getRemoteHost() + " {method:"
 						+ request.getMethod() + ", URI:" + request.getRequestURI() + ", query:"
 						+ request.getQueryString() + "}");
 	}
-	
-	
+
 }

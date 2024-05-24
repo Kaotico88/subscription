@@ -12,14 +12,15 @@ import com.gudmundsson.subscription.util.exception.RepositoryException;
 public interface MSubscriptionMapper {
 
 	public Subscription getSubscriptionById(@Param("recordId") long recordId) throws RepositoryException;
-	
+
 	public List<Subscription> getSubscriptionsByCustomerId(@Param("recordId") long recordId) throws RepositoryException;
-	
-	public List<Subscription> getSubscriptionsByInvoiceId(@Param("invoiceId") long invoiceId) throws RepositoryException;
-	
+
+	public List<Subscription> getSubscriptionsByInvoiceId(@Param("invoiceId") long invoiceId)
+			throws RepositoryException;
+
 	public void saveRecord(@Param("subscription") Subscription subscription) throws RepositoryException;
-	
+
 	public void updateRecord(@Param("subscription") Subscription subscription) throws RepositoryException;
-	
+
 	public Long getNextVal();
 }

@@ -36,19 +36,19 @@ import jakarta.servlet.http.HttpServletRequest;
 public class SubscriptionResource {
 
 	private static final Logger logger = LoggerFactory.getLogger(CompanyResource.class);
-	
+
 	@Autowired
 	private AEutil util;
-	
+
 	@Autowired
 	private SubscriptionService subscriptionService;
-	
+
 	@Autowired
 	private CustomerService customerService;
-	
+
 	@Autowired
 	private ItemServiceService itemServiceService;
-	
+
 	@GetMapping("/status")
 	public ResponseEntity<HealthMessage> healthRequest(HttpServletRequest request) throws Exception {
 
@@ -56,100 +56,104 @@ public class SubscriptionResource {
 		HttpHeaders responseHeaders = new HttpHeaders();
 		requestLog(request, "X: ");
 
-		message = new HealthMessage("Service is operating normally!!");
+		message = new HealthMessage("Service is operating normally!! at subscription");
 
 		responseHeaders.set("Custom-Message", "HTTP/1.1 200 OK");
 		return new ResponseEntity<HealthMessage>(message, responseHeaders, HttpStatus.OK);
 	}
-	
+
 	@PostMapping("/customer/{customerId}/itemService/{itemServiceId}/activate")
-	public ResponseEntity<Subscription> register(@PathVariable("customerId") Long customerId, @PathVariable("itemServiceId") Long itemServiceId,
-			@RequestBody SubscriptionDto subscriptionDto , HttpServletRequest request){
+	public ResponseEntity<Subscription> register(@PathVariable("customerId") Long customerId,
+			@PathVariable("itemServiceId") Long itemServiceId, @RequestBody SubscriptionDto subscriptionDto,
+			HttpServletRequest request) {
 		String sessionLogId = System.currentTimeMillis() + ": ";
-		
+
 		Subscription responseObj = new Subscription();// este es el objetito
 		Customer customer = new Customer();
 		ItemService itemService = new ItemService();
-		
+
 		HttpHeaders responseHeaders = new HttpHeaders();
-		
+
 		requestLog(request, sessionLogId);
-		
-		if(customerId == null || customerId <= 0) {
+
+		if (customerId == null || customerId <= 0) {
 			throw new CustomRuntimeException(HttpStatus.BAD_REQUEST, 400, "El parametro 'cusmtomerId' no es valido.");
 		}
-		
-		if(itemServiceId == null || itemServiceId <= 0) {
+
+		if (itemServiceId == null || itemServiceId <= 0) {
 			throw new CustomRuntimeException(HttpStatus.BAD_REQUEST, 400, "El parametro 'itemServiceId' no es valido.");
 		}
-		
-		if(subscriptionDto == null) {
+
+		if (subscriptionDto == null) {
 			throw new CustomRuntimeException(HttpStatus.BAD_REQUEST, 400, "El objecto que desea registrar es nulo.");
 		}
-		
+
 		customer = customerService.getCustomerById(ofNullable(customerId));
-		if(customer == null || customer.getCustomerId() == null ) {
-			throw new CustomRuntimeException(HttpStatus.BAD_REQUEST, 400,"El 'Cliente' no esta registrado .");
+		if (customer == null || customer.getCustomerId() == null) {
+			throw new CustomRuntimeException(HttpStatus.BAD_REQUEST, 400, "El 'cliente' no esta registrado.");
 		}
-		
+
 		itemService = itemServiceService.getItemServiceById(ofNullable(itemServiceId));
-		if(itemService == null || itemService.getItemServiceId() == null) {
-			throw new CustomRuntimeException(HttpStatus.BAD_REQUEST, 400, "El 'ItemService' no esta registrado .");
+		if (itemService == null || itemService.getItemServiceId() == null) {
+			throw new CustomRuntimeException(HttpStatus.BAD_REQUEST, 400, "El 'itemService' no esta registrado.");
 		}
-		
+
 		subscriptionDto.setCustomerId(customerId);
 		subscriptionDto.setItemServiceId(itemServiceId);
 		subscriptionDto.copyToCore(responseObj);
-		
+
 		responseObj = subscriptionService.save(responseObj);
-		
-		if(responseObj == null || responseObj.getSubscriptionId() == null || responseObj.getCustomer().getCustomerId() == null
+
+		if (responseObj == null || responseObj.getSubscriptionId() == null
+				|| responseObj.getCustomer().getCustomerId() == null
 				|| responseObj.getItemService().getItemServiceId() == null) {
-			throw new CustomRuntimeException(HttpStatus.CONFLICT, 400,"La subscripcion no se pudo registrar.");
+			throw new CustomRuntimeException(HttpStatus.CONFLICT, 400, "La subscripcion no se pudo registrar.");
 		}
-		
+
 		responseHeaders.set("Custom-Message", "HTTP/1.1 201 CREATED");
-        return new ResponseEntity<Subscription>(responseObj, responseHeaders, HttpStatus.CREATED);
+		return new ResponseEntity<Subscription>(responseObj, responseHeaders, HttpStatus.CREATED);
 	}
-	
+
+//Endpint para actualizar es estado del una subcription	
 	@PutMapping("/{subscriptionId}")
 	public ResponseEntity<Subscription> unsubscribe(@PathVariable("subscriptionId") Long subscriptionId,
-			@RequestParam(name = "state") Boolean state, @RequestParam(name = "hoursUsed") Double hoursUsed, 
-			HttpServletRequest request){
+			@RequestParam(name = "state") Boolean state, @RequestParam(name = "hoursUsed") Double hoursUsed,
+			HttpServletRequest request) {
 		String sessionLogId = System.currentTimeMillis() + ": ";
 		Subscription responseObj = new Subscription();// este es el objetito
 		HttpHeaders responseHeaders = new HttpHeaders();
-		
+
 		requestLog(request, sessionLogId);
-		
-		if(subscriptionId == null || subscriptionId <= 0) {
-			throw new CustomRuntimeException(HttpStatus.BAD_REQUEST, 400, "El parametro 'subscriptionId' no es valido.");
+
+		if (subscriptionId == null || subscriptionId <= 0) {
+			throw new CustomRuntimeException(HttpStatus.BAD_REQUEST, 400,
+					"El parametro 'subscriptionId' no es valido.");
 		}
-		
-		if(state == null) {
+
+		if (state == null) {
 			throw new CustomRuntimeException(HttpStatus.BAD_REQUEST, 400, "El parametro 'state' no es valido.");
 		}
-		
+
 		responseObj = subscriptionService.getSubscriptionById(ofNullable(subscriptionId));
-		
-		if(responseObj == null || responseObj.getSubscriptionId() == null ) {
-			throw new CustomRuntimeException(HttpStatus.BAD_REQUEST, 400,"La  'Subscripcion' no esta registrado .");
+
+		if (responseObj == null || responseObj.getSubscriptionId() == null) {
+			throw new CustomRuntimeException(HttpStatus.BAD_REQUEST, 400, "La  'Subscripcion' no esta registrado.");
 		}
-		
+
 		responseObj.setState(state);
 		responseObj.setHoursUsed(hoursUsed);
 		responseObj = subscriptionService.update(responseObj);
-		
-		if(responseObj == null || responseObj.getSubscriptionId() == null || responseObj.getCustomer().getCustomerId() == null
+
+		if (responseObj == null || responseObj.getSubscriptionId() == null
+				|| responseObj.getCustomer().getCustomerId() == null
 				|| responseObj.getItemService().getItemServiceId() == null) {
-			throw new CustomRuntimeException(HttpStatus.CONFLICT, 400,"La subscripcion no se pudo registrar.");
+			throw new CustomRuntimeException(HttpStatus.CONFLICT, 400, "La subscripcion no se pudo registrar.");
 		}
-		
+
 		responseHeaders.set("Custom-Message", "HTTP/1.1 201 CREATED");
-        return new ResponseEntity<Subscription>(responseObj, responseHeaders, HttpStatus.CREATED);
+		return new ResponseEntity<Subscription>(responseObj, responseHeaders, HttpStatus.CREATED);
 	}
-	
-	
+
 	private synchronized void requestLog(HttpServletRequest request, String sessionLogId) {
 		AElog.infoX(logger,
 				sessionLogId + util.getInetAddressPort() + " <= " + request.getRemoteHost() + " {method:"

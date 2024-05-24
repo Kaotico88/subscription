@@ -12,6 +12,6 @@ public class ResponseInvoiceDto {
 
 	public void setData(Data data) {
 		this.data = data;
-	}	
-	
+	}
+
 }

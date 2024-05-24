@@ -12,12 +12,13 @@ import com.gudmundsson.subscription.util.exception.RepositoryException;
 public interface MItemServiceMapper {
 
 	public ItemService getItemServiceById(@Param("recordId") Long recordId) throws RepositoryException;
-	
+
 	public void saveRecord(@Param("item_service") ItemService itemService) throws RepositoryException;
-	
-	public ItemService getItemServiceBySubscriptionId(@Param("subscriptionId") Long subscriptionId) throws RepositoryException;
-	
+
+	public ItemService getItemServiceBySubscriptionId(@Param("subscriptionId") Long subscriptionId)
+			throws RepositoryException;
+
 	public List<ItemService> getItemServicesByCompanyId(@Param("companyId") Long companyId) throws RepositoryException;
-	
+
 	public Long getNextVal();
 }

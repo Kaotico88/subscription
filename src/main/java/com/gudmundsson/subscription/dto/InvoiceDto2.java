@@ -5,11 +5,11 @@ import java.sql.Timestamp;
 public class InvoiceDto2 {
 
 	private String billingPeriod;
-	
+
 	private Timestamp issueDate;
-	
+
 	private Long subscriptionId;
-	
+
 	private double totalAmount;
 
 	public String getBillingPeriod() {
@@ -43,6 +43,5 @@ public class InvoiceDto2 {
 	public void setTotalAmount(double totalAmount) {
 		this.totalAmount = totalAmount;
 	}
-	
-	
+
 }

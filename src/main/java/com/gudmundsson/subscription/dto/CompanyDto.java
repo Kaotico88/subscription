@@ -10,11 +10,11 @@ public class CompanyDto {
 	@NotNull(message = "EL campo 'name' no es valido.")
 	@Size(max = 3, message = "El campo 'name' no debe ser mayor que de 40 caracteres.")
 	private String name;
-	
+
 	@NotNull(message = "EL campo 'address' no es valido.")
 	@Size(max = 3, message = "El campo 'address' no debe ser mayor que de 40 caracteres.")
 	private String address;
-	
+
 	public void copyToCore(Company object) {
 		object.setName(this.name);
 		object.setAddress(this.address);
@@ -35,5 +35,5 @@ public class CompanyDto {
 	public void setAddress(String address) {
 		this.address = address;
 	}
-	
+
 }

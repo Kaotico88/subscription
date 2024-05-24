@@ -17,18 +17,18 @@ public class RCustomerRepository {
 	public Customer getCustomerById(Optional<Long> id) throws RepositoryException {
 		return mapper.getCustomerById(id.orElse(null));
 	}
-	
+
 	public Customer save(Customer object) throws RepositoryException {
 		long id = nextVal();
 		object.setCustomerId(id);
 		mapper.saveRecord(object);
 		return object;
 	}
-	
+
 	public Customer getCustomerByInvoiceId(Optional<Long> invoiceId) throws RepositoryException {
 		return mapper.getCustomerByInvoiceId(invoiceId.orElse(null));
 	}
-	
+
 	public Long nextVal() {
 		return mapper.getNextVal();
 	}

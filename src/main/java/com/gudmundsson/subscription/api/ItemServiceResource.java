@@ -27,13 +27,13 @@ import jakarta.servlet.http.HttpServletRequest;
 public class ItemServiceResource {
 
 	private static final Logger logger = LoggerFactory.getLogger(CustomerResource.class);
-	
+
 	@Autowired
 	private AEutil util;
-	
+
 	@Autowired
 	private ItemServiceService itemServiceService;
-	
+
 	@GetMapping("/status")
 	public ResponseEntity<HealthMessage> healthRequest(HttpServletRequest request) throws Exception {
 
@@ -41,34 +41,35 @@ public class ItemServiceResource {
 		HttpHeaders responseHeaders = new HttpHeaders();
 		requestLog(request, "X: ");
 
-		message = new HealthMessage("Service is operating normally!!");
+		message = new HealthMessage("Service is operating normally a itemService!!");
 
 		responseHeaders.set("Custom-Message", "HTTP/1.1 200 OK");
 		return new ResponseEntity<HealthMessage>(message, responseHeaders, HttpStatus.OK);
 	}
-	
+
 	@PostMapping
-	public ResponseEntity<ItemService> save(@RequestBody ItemServiceDto itemServiceDto, HttpServletRequest request){
+	public ResponseEntity<ItemService> save(@RequestBody ItemServiceDto itemServiceDto, HttpServletRequest request) {
 		String sessionLogId = System.currentTimeMillis() + ": ";
 		ItemService responseObj = new ItemService();// este es el objetito
 		HttpHeaders responseHeaders = new HttpHeaders();
 		requestLog(request, sessionLogId);
-		
-		if(itemServiceDto == null) {
+
+		if (itemServiceDto == null) {
 			throw new CustomRuntimeException(HttpStatus.BAD_REQUEST, 400, "El objeto que se desea registrar es nulo.");
 		}
-		
+
 		itemServiceDto.copyToCore(responseObj);
 		responseObj = itemServiceService.save(responseObj);
-		
-		if(responseObj == null || responseObj.getItemServiceId() == null) {
+
+		if (responseObj == null || responseObj.getItemServiceId() == null
+				|| responseObj.getCompany().getCompanyId() == null) {
 			throw new CustomRuntimeException(HttpStatus.CONFLICT, "El servicio no se pudo registrar.");
 		}
-		
+
 		responseHeaders.set("Custom-Message", "HTTP/1.1 201 CREATED");
-        return new ResponseEntity<ItemService>(responseObj, responseHeaders, HttpStatus.CREATED);
+		return new ResponseEntity<ItemService>(responseObj, responseHeaders, HttpStatus.CREATED);
 	}
-	
+
 	private synchronized void requestLog(HttpServletRequest request, String sessionLogId) {
 		AElog.infoX(logger,
 				sessionLogId + util.getInetAddressPort() + " <= " + request.getRemoteHost() + " {method:"

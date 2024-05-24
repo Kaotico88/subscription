@@ -14,17 +14,17 @@ public class SubscriptionDto {
 
 	@NotNull(message = "El campo 'state' no es válido.")
 	private boolean state;
-	
+
 	@NotNull(message = "El campo 'hoursUsed' no es válido.")
 	@Min(value = 0, message = "El campo 'amount' no puede ser menor a 0")
 	private double hoursUsed;
-	
+
 	private LocalDateTime activationDate = LocalDateTime.now();
-	
+
 	private Long customerId;
-	
+
 	private Long itemServiceId;
-	
+
 	public void copyToCore(Subscription object) {
 		object.setState(this.state);
 		object.setHoursUsed(this.hoursUsed);
@@ -34,7 +34,7 @@ public class SubscriptionDto {
 		object.setItemService(new ItemService());
 		object.getItemService().setItemServiceId(this.itemServiceId);
 	}
-	
+
 	public SubscriptionDto() {
 	}
 
@@ -69,6 +69,5 @@ public class SubscriptionDto {
 	public void setItemServiceId(Long itemServiceId) {
 		this.itemServiceId = itemServiceId;
 	}
-	
-	
+
 }

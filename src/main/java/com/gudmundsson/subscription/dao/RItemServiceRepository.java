@@ -18,24 +18,22 @@ public class RItemServiceRepository {
 	public ItemService getItemServiceById(Optional<Long> id) throws RepositoryException {
 		return mapper.getItemServiceById(id.orElse(null));
 	}
-	
+
 	public ItemService save(ItemService object) throws RepositoryException {
 		long id = nextVal();
 		object.setItemServiceId(id);
 		mapper.saveRecord(object);
 		return object;
 	}
-	
-	
-	
+
 	public List<ItemService> getItemServicesByCompanyId(Optional<Long> companyId) throws RepositoryException {
 		return mapper.getItemServicesByCompanyId(companyId.orElse(null));
 	}
-	
-	public ItemService getItemServiceBySubscriptionId(Optional<Long> subscriptionId) throws RepositoryException{
+
+	public ItemService getItemServiceBySubscriptionId(Optional<Long> subscriptionId) throws RepositoryException {
 		return mapper.getItemServiceBySubscriptionId(subscriptionId.orElse(null));
 	}
-	 
+
 	public Long nextVal() {
 		return mapper.getNextVal();
 	}
